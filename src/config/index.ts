@@ -11,6 +11,11 @@ const config = {
     db_url: process.env.DATABASE_URL,
     direct_url: process.env.DIRECT_URL,
   },
+
+  super_admin: {
+    email: process.env.SUPER_ADMIN_EMAIL,
+    passwrod: process.env.SUPER_ADMIN_PASSWORD,
+  },
 };
 
 export default config;

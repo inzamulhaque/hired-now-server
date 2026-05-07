@@ -9,10 +9,12 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
+    "seed": "tsx prisma/seed.ts",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
