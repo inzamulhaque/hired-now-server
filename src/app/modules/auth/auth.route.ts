@@ -1,14 +1,14 @@
 import express from "express";
 import validateRequest from "../../middlewares/validateRequest.js";
 import { createUserValidationSchema } from "./auth.validation.js";
-import { createNewEmployer } from "./auth.controller.js";
+import { createNewAccount } from "./auth.controller.js";
 
 const router = express.Router();
 
 router.post(
-  "/employer/signup",
+  "/signup",
   validateRequest(createUserValidationSchema),
-  createNewEmployer,
+  createNewAccount,
 );
 
 const AuthRouters = router;

@@ -23,9 +23,10 @@ model User {
 
   previousPassword String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  otp       Otp[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  otp               Otp[]
+  freelancerProfile FreelancerProfile?
 
   @@index([role])
   @@map("users")
@@ -47,6 +48,23 @@ model Otp {
   @@index([userId])
   @@index([code])
   @@map("otp")
+}
+
+model FreelancerProfile {
+  id           String   @id @default(uuid())
+  userId       String   @unique @map("user_id")
+  title        String?
+  bio          String?
+  skills       String[]
+  hourlyRate   Decimal? @db.Decimal(10, 2)
+  availability Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("freelancer_profiles")
 }
 
 enum Role {

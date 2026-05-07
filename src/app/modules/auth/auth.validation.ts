@@ -36,7 +36,7 @@ export const createUserValidationSchema = z.object({
         error: "Password must contain at least one special character",
       }),
 
-    role: z.enum(Role).optional().default(Role.EMPLOYER),
+    role: z.enum(Role),
 
     status: z
       .enum(AccountStatus)

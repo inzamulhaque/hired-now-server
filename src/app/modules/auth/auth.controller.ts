@@ -1,15 +1,15 @@
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
-import { createNewEmployerIntoDB } from "./auth.service.js";
+import { createNewAccountIntoDB } from "./auth.service.js";
 
-export const createNewEmployer = catchAsync(async (req, res) => {
-  const result = await createNewEmployerIntoDB(req.body);
+export const createNewAccount = catchAsync(async (req, res) => {
+  const result = await createNewAccountIntoDB(req.body);
 
   sendResponse(res, {
     success: true,
     statusCode: 201,
     message:
-      "Employer account created successfully. Please verify your email address to activate your account.",
+      "Account created successfully. Please verify your email address to activate your account.",
     data: result,
   });
 });

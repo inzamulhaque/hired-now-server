@@ -11,7 +11,7 @@ import {
 import { AccountStatus, OtpType, Role } from "../../../generated/enums.js";
 import sendEmail from "../../utils/sendEmail.js";
 
-export const createNewEmployerIntoDB = async (payload: IUser) => {
+export const createNewAccountIntoDB = async (payload: IUser) => {
   const isUserExist = await prisma.user.findUnique({
     where: {
       email: payload.email,
