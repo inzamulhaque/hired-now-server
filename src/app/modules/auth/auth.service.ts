@@ -39,6 +39,7 @@ export const createNewEmployerIntoDB = async (payload: IUser) => {
     type: OtpType.EMAIL_VERIFICATION,
   });
 
+  //   use transaction for make sure user and otp both are created
   const result = await prisma.$transaction(async (tc) => {
     const user = await tc.user.create({
       data: {
@@ -65,7 +66,6 @@ export const createNewEmployerIntoDB = async (payload: IUser) => {
 
   //   create email subject line and send email
   const subjectLine = getSubjectLine(OtpType.EMAIL_VERIFICATION);
-
   await sendEmail(payload.email, subjectLine, emailHTML);
 
   return restData;
