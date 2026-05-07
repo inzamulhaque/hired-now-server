@@ -25,9 +25,29 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  otp       Otp[]
 
   @@index([role])
   @@map("users")
+}
+
+model Otp {
+  id     String  @id @default(uuid())
+  userId String
+  code   Int
+  type   OtpType
+
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([code])
+  @@index([type])
+  @@map("otp")
 }
 
 enum Role {
@@ -44,4 +64,9 @@ enum AccountStatus {
   BANNED
   PENDING_VERIFICATION
   DELETED
+}
+
+enum OtpType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
 }
