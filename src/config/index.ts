@@ -16,6 +16,13 @@ const config = {
     email: process.env.SUPER_ADMIN_EMAIL,
     passwrod: process.env.SUPER_ADMIN_PASSWORD,
   },
+
+  password_hash_slot: process.env.PASSWORD_HASH_SLOT,
+
+  email: {
+    address: process.env.EMAIL_ADDRESS,
+    password: process.env.EMAIL_PASSWORD,
+  },
 };
 
 export default config;

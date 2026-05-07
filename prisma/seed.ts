@@ -18,7 +18,7 @@ const seedSuperAdmin = async () => {
     if (!isSuperAdminExist) {
       const hashedPassword: string = await bcrypt.hash(
         config.super_admin.passwrod as string,
-        12,
+        Number(config.password_hash_slot),
       );
 
       const superAdmin = await prisma.user.create({

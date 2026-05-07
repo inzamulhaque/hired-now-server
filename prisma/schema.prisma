@@ -46,7 +46,6 @@ model Otp {
 
   @@index([userId])
   @@index([code])
-  @@index([type])
   @@map("otp")
 }
 
@@ -69,4 +68,5 @@ enum AccountStatus {
 enum OtpType {
   EMAIL_VERIFICATION
   PASSWORD_RESET
+  RESEND_OTP
 }

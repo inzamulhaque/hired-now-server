@@ -33,7 +33,8 @@ export type AccountStatus = (typeof AccountStatus)[keyof typeof AccountStatus]
 
 export const OtpType = {
   EMAIL_VERIFICATION: 'EMAIL_VERIFICATION',
-  PASSWORD_RESET: 'PASSWORD_RESET'
+  PASSWORD_RESET: 'PASSWORD_RESET',
+  RESEND_OTP: 'RESEND_OTP'
 } as const
 
 export type OtpType = (typeof OtpType)[keyof typeof OtpType]
