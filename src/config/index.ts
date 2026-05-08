@@ -23,6 +23,11 @@ const config = {
     address: process.env.EMAIL_ADDRESS,
     password: process.env.EMAIL_PASSWORD,
   },
+
+  jwt: {
+    access_secret: process.env.JWT_ACCESS_SECRET,
+    refresh_secret: process.env.JWT_REFRESH_SECRET,
+  },
 };
 
 export default config;

@@ -6,6 +6,6 @@ export interface IUser {
   name: string;
   password: string;
   oldPassword?: string;
-  role?: Role;
+  role: Role;
   status?: AccountStatus;
 }

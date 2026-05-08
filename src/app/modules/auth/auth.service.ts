@@ -45,7 +45,6 @@ export const createNewAccountIntoDB = async (payload: IUser) => {
       data: {
         ...payload,
         password: hashedPassword,
-        role: Role.EMPLOYER,
         status: AccountStatus.PENDING_VERIFICATION,
       },
     });

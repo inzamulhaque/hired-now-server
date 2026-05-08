@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Otp: 'Otp'
+  Otp: 'Otp',
+  FreelancerProfile: 'FreelancerProfile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -97,6 +98,21 @@ export const OtpScalarFieldEnum = {
 } as const
 
 export type OtpScalarFieldEnum = (typeof OtpScalarFieldEnum)[keyof typeof OtpScalarFieldEnum]
+
+
+export const FreelancerProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  bio: 'bio',
+  skills: 'skills',
+  hourlyRate: 'hourlyRate',
+  availability: 'availability',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FreelancerProfileScalarFieldEnum = (typeof FreelancerProfileScalarFieldEnum)[keyof typeof FreelancerProfileScalarFieldEnum]
 
 
 export const SortOrder = {

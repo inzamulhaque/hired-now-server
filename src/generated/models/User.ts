@@ -215,6 +215,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   otp?: Prisma.OtpListRelationFilter
+  freelancerProfile?: Prisma.XOR<Prisma.FreelancerProfileNullableScalarRelationFilter, Prisma.FreelancerProfileWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -228,6 +229,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   otp?: Prisma.OtpOrderByRelationAggregateInput
+  freelancerProfile?: Prisma.FreelancerProfileOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -244,6 +246,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   otp?: Prisma.OtpListRelationFilter
+  freelancerProfile?: Prisma.XOR<Prisma.FreelancerProfileNullableScalarRelationFilter, Prisma.FreelancerProfileWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -287,6 +290,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   otp?: Prisma.OtpCreateNestedManyWithoutUserInput
+  freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -300,6 +304,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   otp?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -313,6 +318,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otp?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -326,6 +332,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   otp?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -439,6 +446,20 @@ export type UserUpdateOneRequiredWithoutOtpNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOtpInput, Prisma.UserUpdateWithoutOtpInput>, Prisma.UserUncheckedUpdateWithoutOtpInput>
 }
 
+export type UserCreateNestedOneWithoutFreelancerProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFreelancerProfileInput, Prisma.UserUncheckedCreateWithoutFreelancerProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFreelancerProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFreelancerProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFreelancerProfileInput, Prisma.UserUncheckedCreateWithoutFreelancerProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFreelancerProfileInput
+  upsert?: Prisma.UserUpsertWithoutFreelancerProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFreelancerProfileInput, Prisma.UserUpdateWithoutFreelancerProfileInput>, Prisma.UserUncheckedUpdateWithoutFreelancerProfileInput>
+}
+
 export type UserCreateWithoutOtpInput = {
   id?: string
   email: string
@@ -449,6 +470,7 @@ export type UserCreateWithoutOtpInput = {
   previousPassword?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOtpInput = {
@@ -461,6 +483,7 @@ export type UserUncheckedCreateWithoutOtpInput = {
   previousPassword?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOtpInput = {
@@ -489,6 +512,7 @@ export type UserUpdateWithoutOtpInput = {
   previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpInput = {
@@ -501,6 +525,75 @@ export type UserUncheckedUpdateWithoutOtpInput = {
   previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFreelancerProfileInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role: $Enums.Role
+  status?: $Enums.AccountStatus
+  previousPassword?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otp?: Prisma.OtpCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFreelancerProfileInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role: $Enums.Role
+  status?: $Enums.AccountStatus
+  previousPassword?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otp?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFreelancerProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFreelancerProfileInput, Prisma.UserUncheckedCreateWithoutFreelancerProfileInput>
+}
+
+export type UserUpsertWithoutFreelancerProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFreelancerProfileInput, Prisma.UserUncheckedUpdateWithoutFreelancerProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFreelancerProfileInput, Prisma.UserUncheckedCreateWithoutFreelancerProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFreelancerProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFreelancerProfileInput, Prisma.UserUncheckedUpdateWithoutFreelancerProfileInput>
+}
+
+export type UserUpdateWithoutFreelancerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otp?: Prisma.OtpUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFreelancerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otp?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -545,6 +638,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   otp?: boolean | Prisma.User$otpArgs<ExtArgs>
+  freelancerProfile?: boolean | Prisma.User$freelancerProfileArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -587,6 +681,7 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "status" | "previousPassword" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   otp?: boolean | Prisma.User$otpArgs<ExtArgs>
+  freelancerProfile?: boolean | Prisma.User$freelancerProfileArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -596,6 +691,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     otp: Prisma.$OtpPayload<ExtArgs>[]
+    freelancerProfile: Prisma.$FreelancerProfilePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1002,6 +1098,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   otp<T extends Prisma.User$otpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  freelancerProfile<T extends Prisma.User$freelancerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$freelancerProfileArgs<ExtArgs>>): Prisma.Prisma__FreelancerProfileClient<runtime.Types.Result.GetResult<Prisma.$FreelancerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1454,6 +1551,25 @@ export type User$otpArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   take?: number
   skip?: number
   distinct?: Prisma.OtpScalarFieldEnum | Prisma.OtpScalarFieldEnum[]
+}
+
+/**
+ * User.freelancerProfile
+ */
+export type User$freelancerProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FreelancerProfile
+   */
+  select?: Prisma.FreelancerProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FreelancerProfile
+   */
+  omit?: Prisma.FreelancerProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FreelancerProfileInclude<ExtArgs> | null
+  where?: Prisma.FreelancerProfileWhereInput
 }
 
 /**
