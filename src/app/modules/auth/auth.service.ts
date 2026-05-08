@@ -10,6 +10,8 @@ import {
 } from "./auth.utils.js";
 import { AccountStatus, OtpType, Role } from "../../../generated/enums.js";
 import sendEmail from "../../utils/sendEmail.js";
+import { createToken } from "../../utils/authToken.js";
+import type { Secret } from "jsonwebtoken";
 
 export const createNewAccountIntoDB = async (payload: IUser) => {
   const isUserExist = await prisma.user.findUnique({
@@ -68,4 +70,83 @@ export const createNewAccountIntoDB = async (payload: IUser) => {
   await sendEmail(payload.email, subjectLine, emailHTML);
 
   return restData;
+};
+
+export const signinService = async (email: string, password: string) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  if (user.status === "PENDING_VERIFICATION") {
+    // generate otp code
+    const otpPayload = await generateOtpCode();
+
+    //   create HTML Template for email
+    const emailHTML = generateOtpEmailTemplate({
+      name: user.name,
+      code: otpPayload.code,
+      type: OtpType.EMAIL_VERIFICATION,
+    });
+
+    //   create email subject line and send email
+    const subjectLine = getSubjectLine(OtpType.EMAIL_VERIFICATION);
+    await sendEmail(user.email, subjectLine, emailHTML);
+
+    await prisma.otp.create({
+      data: {
+        userId: user.id,
+        type: "EMAIL_VERIFICATION",
+        ...otpPayload,
+      },
+    });
+
+    throw new AppError(
+      "Please verify your email address to activate your account!",
+      400,
+    );
+  }
+
+  if (user.status === "BANNED") {
+    throw new AppError(
+      "Your account has been banned. Please contact support for further assistance!",
+      403,
+    );
+  }
+
+  if (user.status === "SUSPENDED") {
+    throw new AppError("Your account has been permanently suspended!", 403);
+  }
+
+  if (user.status === "DELETED") {
+    throw new AppError("Your account has been permanently deleted!", 403);
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordValid) {
+    throw new AppError("Invalid email or password!", 401);
+  }
+
+  const accessToken = createToken(
+    { userId: user.id, role: user.role },
+    config.jwt.access_secret as Secret,
+    config.jwt.access_expires_in,
+  );
+
+  const refreshToken = createToken(
+    { userId: user.id, role: user.role },
+    config.jwt.refresh_secret as Secret,
+    config.jwt.refresh_expires_in,
+  );
+
+  return {
+    accessToken,
+    refreshToken,
+  };
 };

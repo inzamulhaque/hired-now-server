@@ -44,3 +44,13 @@ export const createUserValidationSchema = z.object({
       .default(AccountStatus.PENDING_VERIFICATION),
   }),
 });
+
+export const signinUserValidationSchema = z.object({
+  body: z.object({
+    email: z.templateLiteral([z.string().min(1), "@", z.string().max(64)]),
+
+    password: z.string().min(1, {
+      error: "Password is required!",
+    }),
+  }),
+});
