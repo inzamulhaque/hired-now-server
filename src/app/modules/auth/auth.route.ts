@@ -5,6 +5,7 @@ import {
   createUserValidationSchema,
   forgotPasswordValidationSchema,
   resendOtpValidationSchema,
+  resetPasswordValidationSchema,
   signinUserValidationSchema,
   verifyAccountValidationSchema,
 } from "./auth.validation.js";
@@ -13,6 +14,7 @@ import {
   createNewAccount,
   forgotPassword,
   resendOtp,
+  resetPassword,
   signin,
   signOutUser,
   verifyAccount,
@@ -62,6 +64,13 @@ router.post(
   "/verify-reset-otp",
   validateRequest(verifyAccountValidationSchema),
   verifyResetOtp,
+);
+
+router.patch(
+  "/reset-password",
+  auth(Role.ADMIN, Role.EMPLOYER, Role.FREELANCER, Role.SUPER_ADMIN),
+  validateRequest(resetPasswordValidationSchema),
+  resetPassword,
 );
 
 const AuthRouters = router;

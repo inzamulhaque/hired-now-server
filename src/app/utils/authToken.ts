@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import AppError from "./AppError.js";
 
 export const createToken = (
   jwtPayload: { userId: string; role: string },
@@ -11,5 +12,17 @@ export const createToken = (
 };
 
 export const verifyToken = (token: string, secret: jwt.Secret) => {
-  return jwt.verify(token, secret) as jwt.JwtPayload;
+  try {
+    return jwt.verify(token, secret) as jwt.JwtPayload;
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      throw new AppError("Your session has expired!", 401);
+    }
+
+    if (error instanceof jwt.JsonWebTokenError) {
+      throw new AppError("Invalid token!", 401);
+    }
+
+    throw new AppError("Authentication failed!", 401);
+  }
 };

@@ -6,6 +6,7 @@ import {
   createNewAccountIntoDB,
   forgotPasswordService,
   resendOtpService,
+  resetPasswordIntoDB,
   signinService,
   verifyAccountService,
   verifyResetOtpService,
@@ -131,6 +132,24 @@ export const verifyResetOtp = catchAsync(async (req, res) => {
     success: true,
     statusCode: 200,
     message: "OTP verified successfully. You can now reset your password!",
+    data: result,
+  });
+});
+
+export const resetPassword = catchAsync(async (req, res) => {
+  const { userId, role } = req.user!;
+  const { password } = req.body;
+
+  const result = await resetPasswordIntoDB({
+    userId,
+    role,
+    password,
+  });
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Your password has been reset successfully!",
     data: result,
   });
 });

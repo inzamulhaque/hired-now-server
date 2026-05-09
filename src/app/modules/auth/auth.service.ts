@@ -447,9 +447,76 @@ export const verifyResetOtpService = async ({
 
   const resetPasswordToken = createToken(
     { userId: user.id, role: user.role },
-    config.jwt.reset_password_secret as Secret,
+    config.jwt.access_secret as Secret,
     config.jwt.reset_password_expires_in,
   );
 
   return resetPasswordToken;
+};
+
+export const resetPasswordIntoDB = async ({
+  userId,
+  role,
+  password,
+}: {
+  userId: string;
+  role: Role;
+  password: string;
+}) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: userId,
+      role: role,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  const isNewPasswordSameAsCurrentPassword = await bcrypt.compare(
+    password,
+    user.password,
+  );
+
+  if (isNewPasswordSameAsCurrentPassword) {
+    throw new AppError(
+      "Your new password cannot be the same as your current password!",
+      400,
+    );
+  }
+
+  if (user?.previousPassword) {
+    const isNewPasswordSameAsPreviousPassword = await bcrypt.compare(
+      password,
+      user.previousPassword,
+    );
+
+    if (isNewPasswordSameAsPreviousPassword) {
+      throw new AppError(
+        "New password cannot be the same as your previous password!",
+        400,
+      );
+    }
+  }
+
+  const hashedPassword = await bcrypt.hash(
+    password,
+    Number(config.password_hash_slot),
+  );
+
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      password: hashedPassword,
+      previousPassword: user.password,
+    },
+  });
+
+  return {
+    name: user.name,
+    email: user.email,
+  };
 };
