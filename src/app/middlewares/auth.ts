@@ -16,7 +16,7 @@ declare global {
 }
 
 const auth = (...requiredRoles: Role[]) => {
-  catchAsync(async (req, res, next) => {
+  return catchAsync(async (req, res, next) => {
     const token = req.headers.authorization;
 
     if (!token) {

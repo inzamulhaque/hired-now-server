@@ -150,3 +150,74 @@ export const signinService = async (email: string, password: string) => {
     refreshToken,
   };
 };
+
+export const changePasswordIntoDB = async (payload: {
+  oldPassword: string;
+  newPassword: string;
+  userId: string;
+  role: Role;
+}) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: payload.userId,
+      role: payload.role,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  const isCurrentPasswordValid = await bcrypt.compare(
+    payload.oldPassword,
+    user.password,
+  );
+
+  if (!isCurrentPasswordValid) {
+    throw new AppError("Your current password is incorrect!", 401);
+  }
+
+  if (payload.oldPassword === payload.newPassword) {
+    throw new AppError(
+      "New password cannot be the same as your current password!",
+      400,
+    );
+  }
+
+  if (user?.previousPassword) {
+    const isNewPasswordSameAsPreviousPassword = await bcrypt.compare(
+      payload.newPassword,
+      user.previousPassword,
+    );
+
+    if (isNewPasswordSameAsPreviousPassword) {
+      throw new AppError(
+        "New password cannot be the same as your previous password!",
+        400,
+      );
+    }
+  }
+
+  const hashedPassword = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.password_hash_slot),
+  );
+
+  const result = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+
+    data: {
+      password: hashedPassword,
+      previousPassword: user.password,
+    },
+
+    select: {
+      name: true,
+      email: true,
+    },
+  });
+
+  return result;
+};

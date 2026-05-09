@@ -1,7 +1,11 @@
 import config from "../../../config/index.js";
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
-import { createNewAccountIntoDB, signinService } from "./auth.service.js";
+import {
+  changePasswordIntoDB,
+  createNewAccountIntoDB,
+  signinService,
+} from "./auth.service.js";
 
 export const createNewAccount = catchAsync(async (req, res) => {
   const result = await createNewAccountIntoDB(req.body);
@@ -32,5 +36,24 @@ export const signin = catchAsync(async (req, res) => {
     success: true,
     message: "User is logged in successfully!",
     data: { token: accessToken },
+  });
+});
+
+export const changePassword = catchAsync(async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { userId, role } = req.user!;
+
+  const result = await changePasswordIntoDB({
+    oldPassword,
+    newPassword,
+    userId,
+    role,
+  });
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Your password has been changed successfully!",
+    data: result,
   });
 });
