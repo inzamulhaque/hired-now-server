@@ -12,6 +12,7 @@ import { AccountStatus, OtpType, Role } from "../../../generated/enums.js";
 import sendEmail from "../../utils/sendEmail.js";
 import { createToken } from "../../utils/authToken.js";
 import type { Secret } from "jsonwebtoken";
+import { number } from "zod";
 
 export const createNewAccountIntoDB = async (payload: IUser) => {
   const isUserExist = await prisma.user.findUnique({
@@ -353,4 +354,102 @@ export const verifyAccountService = async ({
   );
 
   return { ...result, accessToken, refreshToken };
+};
+
+export const forgotPasswordService = async (email: string) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  // generate otp code
+  const otpPayload = await generateOtpCode();
+
+  //   create HTML Template for email
+  const emailHTML = generateOtpEmailTemplate({
+    name: user.name,
+    code: otpPayload.code,
+    type: OtpType.PASSWORD_RESET,
+  });
+
+  await prisma.otp.create({
+    data: {
+      userId: user.id,
+      ...otpPayload,
+      type: OtpType.PASSWORD_RESET,
+    },
+  });
+
+  //   create email subject line and send email
+  const subjectLine = getSubjectLine(OtpType.PASSWORD_RESET);
+  await sendEmail(user.email, subjectLine, emailHTML);
+
+  return { name: user.name, email: user.email };
+};
+
+export const verifyResetOtpService = async ({
+  email,
+  code,
+}: {
+  email: string;
+  code: number;
+}) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  const otp = await prisma.otp.findFirst({
+    where: {
+      userId: user.id,
+      code,
+    },
+  });
+
+  if (!otp) {
+    throw new AppError(
+      "OTP not found or invalid. Please request a new verification code!",
+      400,
+    );
+  }
+
+  const now = new Date();
+
+  const isExpired = now > otp.expiresAt;
+
+  if (isExpired) {
+    throw new AppError(
+      "OTP has expired. Please request a new verification code!",
+      400,
+    );
+  }
+
+  await prisma.otp.update({
+    where: {
+      id: otp.id,
+      userId: user.id,
+      code,
+    },
+    data: {
+      isUsed: true,
+    },
+  });
+
+  const resetPasswordToken = createToken(
+    { userId: user.id, role: user.role },
+    config.jwt.reset_password_secret as Secret,
+    config.jwt.reset_password_expires_in,
+  );
+
+  return resetPasswordToken;
 };

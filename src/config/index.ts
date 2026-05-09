@@ -27,8 +27,10 @@ const config = {
   jwt: {
     access_secret: process.env.JWT_ACCESS_SECRET,
     refresh_secret: process.env.JWT_REFRESH_SECRET,
+    reset_password_secret: process.env.JWT_RESET_PASSWORD_SECRET,
     access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN,
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
+    reset_password_expires_in: process.env.JWT_RESET_PASSWORD_EXPIRES_IN,
   },
 };
 

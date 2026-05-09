@@ -3,6 +3,7 @@ import validateRequest from "../../middlewares/validateRequest.js";
 import {
   changePasswordValidationSchema,
   createUserValidationSchema,
+  forgotPasswordValidationSchema,
   resendOtpValidationSchema,
   signinUserValidationSchema,
   verifyAccountValidationSchema,
@@ -10,10 +11,12 @@ import {
 import {
   changePassword,
   createNewAccount,
+  forgotPassword,
   resendOtp,
   signin,
   signOutUser,
   verifyAccount,
+  verifyResetOtp,
 } from "./auth.controller.js";
 import auth from "../../middlewares/auth.js";
 import { Role } from "../../../generated/enums.js";
@@ -47,6 +50,18 @@ router.post(
   "/verify-account",
   validateRequest(verifyAccountValidationSchema),
   verifyAccount,
+);
+
+router.post(
+  "/forgot-password",
+  validateRequest(forgotPasswordValidationSchema),
+  forgotPassword,
+);
+
+router.post(
+  "/verify-reset-otp",
+  validateRequest(verifyAccountValidationSchema),
+  verifyResetOtp,
 );
 
 const AuthRouters = router;

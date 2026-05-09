@@ -4,9 +4,11 @@ import sendResponse from "../../utils/sendResponse.js";
 import {
   changePasswordIntoDB,
   createNewAccountIntoDB,
+  forgotPasswordService,
   resendOtpService,
   signinService,
   verifyAccountService,
+  verifyResetOtpService,
 } from "./auth.service.js";
 
 export const createNewAccount = catchAsync(async (req, res) => {
@@ -102,6 +104,33 @@ export const verifyAccount = catchAsync(async (req, res) => {
     success: true,
     statusCode: 200,
     message: "Your account has been successfully verified!",
+    data: result,
+  });
+});
+
+export const forgotPassword = catchAsync(async (req, res) => {
+  const { email } = req.body;
+
+  const result = await forgotPasswordService(email);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message:
+      "A password reset verification code has been sent to your email address!",
+    data: result,
+  });
+});
+
+export const verifyResetOtp = catchAsync(async (req, res) => {
+  const { email, code } = req.body;
+
+  const result = await verifyResetOtpService({ email, code });
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "OTP verified successfully. You can now reset your password!",
     data: result,
   });
 });
