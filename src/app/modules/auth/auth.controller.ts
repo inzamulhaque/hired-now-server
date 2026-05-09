@@ -6,6 +6,7 @@ import {
   createNewAccountIntoDB,
   resendOtpService,
   signinService,
+  verifyAccountService,
 } from "./auth.service.js";
 
 export const createNewAccount = catchAsync(async (req, res) => {
@@ -78,6 +79,29 @@ export const resendOtp = catchAsync(async (req, res) => {
     success: true,
     statusCode: 200,
     message: "A new OTP has been sent to your email address successfully!",
+    data: result,
+  });
+});
+
+export const verifyAccount = catchAsync(async (req, res) => {
+  const { email, code } = req.body;
+
+  const { refreshToken, ...result } = await verifyAccountService({
+    email,
+    code,
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.node_env === "production",
+    httpOnly: true,
+    sameSite: "none",
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+  });
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Your account has been successfully verified!",
     data: result,
   });
 });

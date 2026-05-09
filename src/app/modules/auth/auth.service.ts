@@ -260,3 +260,97 @@ export const resendOtpService = async (email: string) => {
     email: user.email,
   };
 };
+
+export const verifyAccountService = async ({
+  email,
+  code,
+}: {
+  email: string;
+  code: number;
+}) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  if (user.status !== AccountStatus.PENDING_VERIFICATION) {
+    throw new AppError(
+      "This action is not allowed. Your account is already verified!",
+      400,
+    );
+  }
+
+  const otp = await prisma.otp.findFirst({
+    where: {
+      userId: user.id,
+      code,
+    },
+  });
+
+  if (!otp) {
+    throw new AppError(
+      "OTP not found or invalid. Please request a new verification code!",
+      400,
+    );
+  }
+
+  const now = new Date();
+
+  const isExpired = now > otp.expiresAt;
+
+  if (isExpired) {
+    throw new AppError(
+      "OTP has expired. Please request a new verification code!",
+      400,
+    );
+  }
+
+  const result = await prisma.$transaction(async (tc) => {
+    const updateStatus = tc.user.update({
+      where: {
+        id: user.id,
+        status: AccountStatus.PENDING_VERIFICATION,
+      },
+      data: {
+        status: AccountStatus.ACTIVE,
+      },
+      select: {
+        name: true,
+        email: true,
+        status: true,
+      },
+    });
+
+    await tc.otp.update({
+      where: {
+        id: otp.id,
+        userId: user.id,
+        code,
+      },
+      data: {
+        isUsed: true,
+      },
+    });
+
+    return updateStatus;
+  });
+
+  const accessToken = createToken(
+    { userId: user.id, role: user.role },
+    config.jwt.access_secret as Secret,
+    config.jwt.access_expires_in,
+  );
+
+  const refreshToken = createToken(
+    { userId: user.id, role: user.role },
+    config.jwt.refresh_secret as Secret,
+    config.jwt.refresh_expires_in,
+  );
+
+  return { ...result, accessToken, refreshToken };
+};

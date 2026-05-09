@@ -5,6 +5,7 @@ import {
   createUserValidationSchema,
   resendOtpValidationSchema,
   signinUserValidationSchema,
+  verifyAccountValidationSchema,
 } from "./auth.validation.js";
 import {
   changePassword,
@@ -12,6 +13,7 @@ import {
   resendOtp,
   signin,
   signOutUser,
+  verifyAccount,
 } from "./auth.controller.js";
 import auth from "../../middlewares/auth.js";
 import { Role } from "../../../generated/enums.js";
@@ -39,6 +41,12 @@ router.post(
   "/resend-otp",
   validateRequest(resendOtpValidationSchema),
   resendOtp,
+);
+
+router.post(
+  "/verify-account",
+  validateRequest(verifyAccountValidationSchema),
+  verifyAccount,
 );
 
 const AuthRouters = router;

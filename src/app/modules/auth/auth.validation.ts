@@ -89,3 +89,23 @@ export const resendOtpValidationSchema = z.object({
     email: z.templateLiteral([z.string().min(1), "@", z.string().max(64)]),
   }),
 });
+
+export const verifyAccountValidationSchema = z.object({
+  body: z.object({
+    email: z.templateLiteral([z.string().min(1), "@", z.string().max(64)]),
+
+    code: z
+      .number({
+        error: "OTP code is required",
+      })
+      .int({
+        error: "OTP code must be an integer",
+      })
+      .min(10000, {
+        error: "OTP code must be 5 digits",
+      })
+      .max(99999, {
+        error: "OTP code must be 5 digits",
+      }),
+  }),
+});
