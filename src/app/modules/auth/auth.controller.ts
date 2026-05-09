@@ -4,6 +4,7 @@ import sendResponse from "../../utils/sendResponse.js";
 import {
   changePasswordIntoDB,
   createNewAccountIntoDB,
+  resendOtpService,
   signinService,
 } from "./auth.service.js";
 
@@ -65,5 +66,18 @@ export const signOutUser = catchAsync(async (req, res) => {
     success: true,
     statusCode: 200,
     message: "Signed out successfully!",
+  });
+});
+
+export const resendOtp = catchAsync(async (req, res) => {
+  const { email } = req.body;
+
+  const result = await resendOtpService(email as string);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "A new OTP has been sent to your email address successfully!",
+    data: result,
   });
 });

@@ -221,3 +221,42 @@ export const changePasswordIntoDB = async (payload: {
 
   return result;
 };
+
+export const resendOtpService = async (email: string) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  // generate otp code
+  const otpPayload = await generateOtpCode();
+
+  //   create HTML Template for email
+  const emailHTML = generateOtpEmailTemplate({
+    name: user.name,
+    code: otpPayload.code,
+    type: OtpType.RESEND_OTP,
+  });
+
+  await prisma.otp.create({
+    data: {
+      userId: user.id,
+      ...otpPayload,
+      type: OtpType.RESEND_OTP,
+    },
+  });
+
+  //   create email subject line and send email
+  const subjectLine = getSubjectLine(OtpType.RESEND_OTP);
+  await sendEmail(user.email, subjectLine, emailHTML);
+
+  return {
+    name: user.name,
+    email: user.email,
+  };
+};

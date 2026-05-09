@@ -3,11 +3,13 @@ import validateRequest from "../../middlewares/validateRequest.js";
 import {
   changePasswordValidationSchema,
   createUserValidationSchema,
+  resendOtpValidationSchema,
   signinUserValidationSchema,
 } from "./auth.validation.js";
 import {
   changePassword,
   createNewAccount,
+  resendOtp,
   signin,
   signOutUser,
 } from "./auth.controller.js";
@@ -32,6 +34,12 @@ router.patch(
 );
 
 router.post("/signout", signOutUser);
+
+router.post(
+  "/resend-otp",
+  validateRequest(resendOtpValidationSchema),
+  resendOtp,
+);
 
 const AuthRouters = router;
 export default AuthRouters;

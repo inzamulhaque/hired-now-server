@@ -83,3 +83,9 @@ export const changePasswordValidationSchema = z.object({
       }),
   }),
 });
+
+export const resendOtpValidationSchema = z.object({
+  body: z.object({
+    email: z.templateLiteral([z.string().min(1), "@", z.string().max(64)]),
+  }),
+});
