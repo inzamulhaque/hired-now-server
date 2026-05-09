@@ -57,3 +57,13 @@ export const changePassword = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+export const signOutUser = catchAsync(async (req, res) => {
+  res.clearCookie("refreshToken");
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Signed out successfully!",
+  });
+});

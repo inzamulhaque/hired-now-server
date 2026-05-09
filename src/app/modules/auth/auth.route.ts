@@ -5,7 +5,12 @@ import {
   createUserValidationSchema,
   signinUserValidationSchema,
 } from "./auth.validation.js";
-import { changePassword, createNewAccount, signin } from "./auth.controller.js";
+import {
+  changePassword,
+  createNewAccount,
+  signin,
+  signOutUser,
+} from "./auth.controller.js";
 import auth from "../../middlewares/auth.js";
 import { Role } from "../../../generated/enums.js";
 
@@ -25,6 +30,8 @@ router.patch(
   validateRequest(changePasswordValidationSchema),
   changePassword,
 );
+
+router.post("/signout", signOutUser);
 
 const AuthRouters = router;
 export default AuthRouters;
