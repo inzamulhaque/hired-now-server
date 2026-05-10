@@ -52,7 +52,7 @@ model Otp {
 
 model FreelancerProfile {
   id           String   @id @default(uuid())
-  userId       String   @unique @map("user_id")
+  userId       String   @unique
   title        String?
   bio          String?
   skills       String[]

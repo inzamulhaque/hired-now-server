@@ -1,7 +1,7 @@
 import config from "../../../config/index.js";
 import prisma from "../../../lib/prisma.js";
 import AppError from "../../utils/AppError.js";
-import type { IUser } from "../user/user.interface.js";
+import type { IUser } from "../users/user.interface.js";
 import bcrypt from "bcrypt";
 import {
   generateOtpCode,
