@@ -6,8 +6,8 @@ import AppError from "../../utils/AppError.js";
 import { AccountStatus } from "../../../generated/enums.js";
 
 export const updateUserInfoIntoDB = async (
-  payload: Partial<Pick<IUser, "name" | "status">>,
   loggedUser: JwtPayload,
+  payload: Partial<Pick<IUser, "name" | "status">>,
 ) => {
   const user = await prisma.user.findFirst({
     where: {

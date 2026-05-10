@@ -45,7 +45,7 @@ const auth = (...requiredRoles: Role[]) => {
       throw new AppError("This user is not found!", 401);
     }
 
-    if (user?.status !== "ACTIVE") {
+    if (user?.status !== "ACTIVE" && user?.status !== "INACTIVE") {
       throw new AppError("This user is not active!", 401);
     }
 
