@@ -1,5 +1,5 @@
 import type { JwtPayload } from "jsonwebtoken";
-import type { IFreelancer } from "../freelancers/freelancers.interface.js";
+
 import type { IUser } from "./user.interface.js";
 import prisma from "../../../lib/prisma.js";
 import AppError from "../../utils/AppError.js";
