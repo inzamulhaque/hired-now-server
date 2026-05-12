@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Job description to be enhanced"
+    },
+    "skillsRequired": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of required skills for the job"
+    }
+  },
+  "required": ["description", "skillsRequired"],
+  "additionalProperties": false
+}

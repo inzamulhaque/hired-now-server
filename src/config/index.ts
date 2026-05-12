@@ -32,6 +32,10 @@ const config = {
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
     reset_password_expires_in: process.env.JWT_RESET_PASSWORD_EXPIRES_IN,
   },
+
+  open_router: {
+    api_key: process.env.OPENROUTER_API_KEY,
+  },
 };
 
 export default config;
