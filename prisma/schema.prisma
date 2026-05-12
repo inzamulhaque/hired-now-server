@@ -27,6 +27,7 @@ model User {
   updatedAt         DateTime           @updatedAt
   otp               Otp[]
   freelancerProfile FreelancerProfile?
+  jobs              Job[]
 
   @@index([role])
   @@map("users")
@@ -67,6 +68,26 @@ model FreelancerProfile {
   @@map("freelancer_profiles")
 }
 
+model Job {
+  id             String    @id @default(uuid())
+  employerId     String
+  title          String
+  description    String
+  skillsRequired String[]
+  budget         Decimal?  @db.Decimal(10, 2)
+  jobType        JobType
+  status         JobStatus @default(OPEN)
+  aiEnhanced     Boolean   @default(false) @map("ai_enhanced")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  employer User @relation(fields: [employerId], references: [id])
+
+  @@index([employerId])
+  @@index([status])
+  @@map("jobs")
+}
+
 enum Role {
   EMPLOYER
   FREELANCER
@@ -87,4 +108,15 @@ enum OtpType {
   EMAIL_VERIFICATION
   PASSWORD_RESET
   RESEND_OTP
+}
+
+enum JobType {
+  FIXED
+  HOURLY
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+  FILLED
 }

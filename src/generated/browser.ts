@@ -32,3 +32,8 @@ export type Otp = Prisma.OtpModel
  * 
  */
 export type FreelancerProfile = Prisma.FreelancerProfileModel
+/**
+ * Model Job
+ * 
+ */
+export type Job = Prisma.JobModel

@@ -38,3 +38,20 @@ export const OtpType = {
 } as const
 
 export type OtpType = (typeof OtpType)[keyof typeof OtpType]
+
+
+export const JobType = {
+  FIXED: 'FIXED',
+  HOURLY: 'HOURLY'
+} as const
+
+export type JobType = (typeof JobType)[keyof typeof JobType]
+
+
+export const JobStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED',
+  FILLED: 'FILLED'
+} as const
+
+export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]

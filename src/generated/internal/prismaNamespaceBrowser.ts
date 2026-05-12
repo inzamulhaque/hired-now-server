@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Otp: 'Otp',
-  FreelancerProfile: 'FreelancerProfile'
+  FreelancerProfile: 'FreelancerProfile',
+  Job: 'Job'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -113,6 +114,23 @@ export const FreelancerProfileScalarFieldEnum = {
 } as const
 
 export type FreelancerProfileScalarFieldEnum = (typeof FreelancerProfileScalarFieldEnum)[keyof typeof FreelancerProfileScalarFieldEnum]
+
+
+export const JobScalarFieldEnum = {
+  id: 'id',
+  employerId: 'employerId',
+  title: 'title',
+  description: 'description',
+  skillsRequired: 'skillsRequired',
+  budget: 'budget',
+  jobType: 'jobType',
+  status: 'status',
+  aiEnhanced: 'aiEnhanced',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
 
 
 export const SortOrder = {
