@@ -1,0 +1,18 @@
+import z from "zod";
+import { JobType } from "../../../generated/enums.js";
+
+export const createNewJobValidationSchema = z.object({
+  body: z.object({
+    title: z
+      .string()
+      .min(1, "Title is required!")
+      .max(100, "Title must be less than 100 characters!"),
+    description: z
+      .string()
+      .min(1, "Description is required!")
+      .max(2000, "Description must be less than 2000 characters!"),
+    skillsRequired: z.string().min(1, "Skills are required!"),
+    budget: z.number().positive("Budget must be a positive number!"),
+    jobType: z.enum(JobType, "Job type must be either FIXED or HOURLY!"),
+  }),
+});

@@ -27,7 +27,7 @@ model User {
   updatedAt         DateTime           @updatedAt
   otp               Otp[]
   freelancerProfile FreelancerProfile?
-  jobs              Job[]
+  jobs              Job[]              @relation("EmployerJobs")
 
   @@index([role])
   @@map("users")
@@ -74,14 +74,14 @@ model Job {
   title          String
   description    String
   skillsRequired String[]
-  budget         Decimal?  @db.Decimal(10, 2)
+  budget         Decimal   @db.Decimal(10, 2)
   jobType        JobType
   status         JobStatus @default(OPEN)
   aiEnhanced     Boolean   @default(false) @map("ai_enhanced")
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
 
-  employer User @relation(fields: [employerId], references: [id])
+  employer User @relation("EmployerJobs", fields: [employerId], references: [id])
 
   @@index([employerId])
   @@index([status])

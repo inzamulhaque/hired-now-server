@@ -217,7 +217,7 @@ export type JobGroupByOutputType = {
   title: string
   description: string
   skillsRequired: string[]
-  budget: runtime.Decimal | null
+  budget: runtime.Decimal
   jobType: $Enums.JobType
   status: $Enums.JobStatus
   aiEnhanced: boolean
@@ -254,7 +254,7 @@ export type JobWhereInput = {
   title?: Prisma.StringFilter<"Job"> | string
   description?: Prisma.StringFilter<"Job"> | string
   skillsRequired?: Prisma.StringNullableListFilter<"Job">
-  budget?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFilter<"Job"> | $Enums.JobType
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFilter<"Job"> | boolean
@@ -269,7 +269,7 @@ export type JobOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   skillsRequired?: Prisma.SortOrder
-  budget?: Prisma.SortOrderInput | Prisma.SortOrder
+  budget?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   aiEnhanced?: Prisma.SortOrder
@@ -287,7 +287,7 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Job"> | string
   description?: Prisma.StringFilter<"Job"> | string
   skillsRequired?: Prisma.StringNullableListFilter<"Job">
-  budget?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFilter<"Job"> | $Enums.JobType
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFilter<"Job"> | boolean
@@ -302,7 +302,7 @@ export type JobOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   skillsRequired?: Prisma.SortOrder
-  budget?: Prisma.SortOrderInput | Prisma.SortOrder
+  budget?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
   status?: Prisma.SortOrder
   aiEnhanced?: Prisma.SortOrder
@@ -324,7 +324,7 @@ export type JobScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Job"> | string
   description?: Prisma.StringWithAggregatesFilter<"Job"> | string
   skillsRequired?: Prisma.StringNullableListFilter<"Job">
-  budget?: Prisma.DecimalNullableWithAggregatesFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalWithAggregatesFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeWithAggregatesFilter<"Job"> | $Enums.JobType
   status?: Prisma.EnumJobStatusWithAggregatesFilter<"Job"> | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolWithAggregatesFilter<"Job"> | boolean
@@ -337,7 +337,7 @@ export type JobCreateInput = {
   title: string
   description: string
   skillsRequired?: Prisma.JobCreateskillsRequiredInput | string[]
-  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget: runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType: $Enums.JobType
   status?: $Enums.JobStatus
   aiEnhanced?: boolean
@@ -352,7 +352,7 @@ export type JobUncheckedCreateInput = {
   title: string
   description: string
   skillsRequired?: Prisma.JobCreateskillsRequiredInput | string[]
-  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget: runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType: $Enums.JobType
   status?: $Enums.JobStatus
   aiEnhanced?: boolean
@@ -365,7 +365,7 @@ export type JobUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   skillsRequired?: Prisma.JobUpdateskillsRequiredInput | string[]
-  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -380,7 +380,7 @@ export type JobUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   skillsRequired?: Prisma.JobUpdateskillsRequiredInput | string[]
-  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -394,7 +394,7 @@ export type JobCreateManyInput = {
   title: string
   description: string
   skillsRequired?: Prisma.JobCreateskillsRequiredInput | string[]
-  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget: runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType: $Enums.JobType
   status?: $Enums.JobStatus
   aiEnhanced?: boolean
@@ -407,7 +407,7 @@ export type JobUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   skillsRequired?: Prisma.JobUpdateskillsRequiredInput | string[]
-  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -421,7 +421,7 @@ export type JobUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   skillsRequired?: Prisma.JobUpdateskillsRequiredInput | string[]
-  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -538,6 +538,14 @@ export type JobUpdateskillsRequiredInput = {
   push?: string | string[]
 }
 
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type EnumJobTypeFieldUpdateOperationsInput = {
   set?: $Enums.JobType
 }
@@ -551,7 +559,7 @@ export type JobCreateWithoutEmployerInput = {
   title: string
   description: string
   skillsRequired?: Prisma.JobCreateskillsRequiredInput | string[]
-  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget: runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType: $Enums.JobType
   status?: $Enums.JobStatus
   aiEnhanced?: boolean
@@ -564,7 +572,7 @@ export type JobUncheckedCreateWithoutEmployerInput = {
   title: string
   description: string
   skillsRequired?: Prisma.JobCreateskillsRequiredInput | string[]
-  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget: runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType: $Enums.JobType
   status?: $Enums.JobStatus
   aiEnhanced?: boolean
@@ -607,7 +615,7 @@ export type JobScalarWhereInput = {
   title?: Prisma.StringFilter<"Job"> | string
   description?: Prisma.StringFilter<"Job"> | string
   skillsRequired?: Prisma.StringNullableListFilter<"Job">
-  budget?: Prisma.DecimalNullableFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFilter<"Job"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFilter<"Job"> | $Enums.JobType
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFilter<"Job"> | boolean
@@ -620,7 +628,7 @@ export type JobCreateManyEmployerInput = {
   title: string
   description: string
   skillsRequired?: Prisma.JobCreateskillsRequiredInput | string[]
-  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget: runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType: $Enums.JobType
   status?: $Enums.JobStatus
   aiEnhanced?: boolean
@@ -633,7 +641,7 @@ export type JobUpdateWithoutEmployerInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   skillsRequired?: Prisma.JobUpdateskillsRequiredInput | string[]
-  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -646,7 +654,7 @@ export type JobUncheckedUpdateWithoutEmployerInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   skillsRequired?: Prisma.JobUpdateskillsRequiredInput | string[]
-  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -659,7 +667,7 @@ export type JobUncheckedUpdateManyWithoutEmployerInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   skillsRequired?: Prisma.JobUpdateskillsRequiredInput | string[]
-  budget?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   aiEnhanced?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -750,7 +758,7 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     title: string
     description: string
     skillsRequired: string[]
-    budget: runtime.Decimal | null
+    budget: runtime.Decimal
     jobType: $Enums.JobType
     status: $Enums.JobStatus
     aiEnhanced: boolean
