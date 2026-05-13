@@ -1,18 +1,18 @@
-interface ISearchParams<TWhere> {
+export interface ISearchParams {
   page?: number;
   limit?: number;
-  searchString?: string;
+  searchText?: string;
   sortBy?: string;
   sortOrder?: "asc" | "desc";
-  filters?: TWhere;
+  filters?: Record<string, unknown>;
   searchableFields?: string[];
 }
 
-const buildSearchQuery = <TWhere>(params: ISearchParams<TWhere>) => {
+const buildSearchQuery = <TWhere, TOrderBy>(params: ISearchParams) => {
   const {
     page = 1,
     limit = 3,
-    searchString,
+    searchText,
     sortBy = "createdAt",
     sortOrder = "desc",
     filters,
@@ -21,30 +21,29 @@ const buildSearchQuery = <TWhere>(params: ISearchParams<TWhere>) => {
 
   const skip = (page - 1) * limit;
 
-  const where: TWhere & {
-    AND?: unknown[];
-  } = {
+  const where: TWhere = {
     AND: [
       filters || {},
 
-      searchString && searchableFields.length > 0
+      searchText && searchableFields.length > 0
         ? {
             OR: searchableFields.map((field) => ({
               [field]: {
-                contains: searchString,
+                contains: searchText,
                 mode: "insensitive",
               },
             })),
           }
         : {},
     ],
-  } as TWhere & { AND?: unknown[] };
+  } as TWhere;
 
-  const orderBy: unknown = {
+  const orderBy = {
     [sortBy]: sortOrder,
-  };
+  } as TOrderBy;
 
   return {
+    page,
     where,
     skip,
     take: limit,

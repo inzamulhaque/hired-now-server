@@ -24,7 +24,7 @@ const moduleRouters = [
   },
 
   {
-    path: "/freelancers",
+    path: "/jobs",
     route: JobRouters,
   },
 

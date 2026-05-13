@@ -1,6 +1,7 @@
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
-import { createNewJobIntoDB } from "./jobs.service.js";
+import { createNewJobIntoDB, getAllJobsFromDB } from "./jobs.service.js";
+import { searchableFields } from "./jobs.constants.js";
 
 export const createNewJob = catchAsync(async (req, res) => {
   const user = req.user!;
@@ -13,5 +14,22 @@ export const createNewJob = catchAsync(async (req, res) => {
     statusCode: 201,
     message: "Job created successfully!",
     data: result,
+  });
+});
+
+export const getAllJobs = catchAsync(async (req, res) => {
+  const searchParams = req.query;
+
+  const { jobs, meta } = await getAllJobsFromDB({
+    ...searchParams,
+    searchableFields,
+  });
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Jobs retrieved successfully!",
+    meta,
+    data: jobs,
   });
 });

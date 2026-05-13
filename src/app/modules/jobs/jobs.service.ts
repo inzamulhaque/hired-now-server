@@ -3,6 +3,10 @@ import type { IJob } from "./jobs.interface.js";
 import { JobStatus, Role } from "../../../generated/enums.js";
 import prisma from "../../../lib/prisma.js";
 import AppError from "../../utils/AppError.js";
+import type { ISearchParams } from "../../utils/buildSearchQuery.js";
+import buildSearchQuery from "../../utils/buildSearchQuery.js";
+import type { Prisma } from "../../../generated/client.js";
+import calTotalPages from "../../utils/calTotalPages.js";
 
 export const createNewJobIntoDB = async (
   loggedUser: JwtPayload,
@@ -37,4 +41,34 @@ export const createNewJobIntoDB = async (
   });
 
   return job;
+};
+
+export const getAllJobsFromDB = async (payload: ISearchParams) => {
+  const { where, skip, take, orderBy, page } = buildSearchQuery<
+    Prisma.JobWhereInput,
+    Prisma.JobOrderByWithRelationInput
+  >(payload);
+
+  const jobs = await prisma.job.findMany({
+    where,
+    skip,
+    take,
+    orderBy,
+  });
+
+  const totalJobs = await prisma.job.count({ where });
+  const totalPages = calTotalPages(totalJobs, take);
+
+  if (totalPages !== 0 && totalJobs < page) {
+    throw new AppError("Page number exceeds total pages available!", 400);
+  }
+
+  return {
+    jobs,
+    meta: {
+      page: Number(page),
+      total: totalJobs,
+      totalPages,
+    },
+  };
 };
