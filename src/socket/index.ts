@@ -1,4 +1,3 @@
-import { Server as HttpServer } from "http";
 import { Server } from "socket.io";
 import AppError from "../app/utils/AppError.js";
 
@@ -12,7 +11,10 @@ export const initSocketServer = (server: any) => {
   });
 
   io.on("connection", (socket) => {
-    console.log("User connected:", socket.id);
+    console.log(`🔌 New client connected: ${socket.id}`);
+    socket.emit("connected", {
+      message: `Welcome! Your socket ID is ${socket.id}`,
+    });
 
     socket.on("join", (userId: string) => {
       socket.join(userId);
