@@ -65,3 +65,28 @@ export const createOrUpdateFreelancerProfileIntoDB = async (
 
   return profile;
 };
+
+export const getFreelancerProfileFromDB = async (loggedUser: JwtPayload) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: loggedUser.userId,
+      role: Role.FREELANCER,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  const freelancer = await prisma.freelancerProfile.findFirst({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  if (!freelancer) {
+    throw new AppError("Freelancer profile not found!", 404);
+  }
+
+  return freelancer;
+};
