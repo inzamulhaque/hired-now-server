@@ -1,5 +1,9 @@
 import type { Decimal } from "@prisma/client/runtime/client";
-import type { JobStatus, JobType } from "../../../generated/enums.js";
+import type {
+  ApplicationStatus,
+  JobStatus,
+  JobType,
+} from "../../../generated/enums.js";
 
 export interface IJob {
   id: string;
@@ -11,4 +15,15 @@ export interface IJob {
   jobType: JobType;
   status: JobStatus;
   aiEnhanced: boolean;
+}
+
+export interface IJobApplication {
+  id: string;
+  jobId: string;
+  freelancerId: string;
+  coverNote: string;
+  status: ApplicationStatus;
+  aiMatchScore?: number;
+  aiNote?: string;
+  proposedBudget: Decimal;
 }

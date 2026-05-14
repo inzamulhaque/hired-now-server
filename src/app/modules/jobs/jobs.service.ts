@@ -1,12 +1,19 @@
 import type { JwtPayload } from "jsonwebtoken";
-import type { IJob } from "./jobs.interface.js";
-import { JobStatus, Role } from "../../../generated/enums.js";
+import type { IJob, IJobApplication } from "./jobs.interface.js";
+import {
+  ApplicationStatus,
+  JobStatus,
+  Role,
+} from "../../../generated/enums.js";
 import prisma from "../../../lib/prisma.js";
 import AppError from "../../utils/AppError.js";
 import type { ISearchParams } from "../../utils/buildSearchQuery.js";
 import buildSearchQuery from "../../utils/buildSearchQuery.js";
 import type { Prisma } from "../../../generated/client.js";
 import calTotalPages from "../../utils/calTotalPages.js";
+import { getIO } from "../../../socket/index.js";
+import { aiMatchScoreService } from "../AI/ai.service.js";
+import { Decimal } from "@prisma/client/runtime/client";
 
 export const createNewJobIntoDB = async (
   loggedUser: JwtPayload,
@@ -83,4 +90,101 @@ export const getJobByIdFromDB = async (jobId: string) => {
   }
 
   return job;
+};
+
+export const createJobApplicationIntoDB = async (
+  loggedUser: JwtPayload,
+  jobId: string,
+
+  applicationData: Omit<
+    IJobApplication,
+    "id" | "jobId" | "freelancerId" | "status" | "aiMatchScore" | "aiNote"
+  >,
+) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: loggedUser.id,
+      role: Role.FREELANCER,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  const freelancer = await prisma.freelancerProfile.findFirst({
+    where: { userId: user.id },
+  });
+
+  // need complete freelancer profile for applying jobs
+  if (!freelancer) {
+    throw new AppError("Freelancer profile not completed!", 400);
+  }
+
+  const job = await prisma.job.findUnique({
+    where: { id: jobId },
+  });
+
+  if (!job) {
+    throw new AppError("Job not found!", 404);
+  }
+
+  // validated this job open for applications or not
+  if (job.status !== JobStatus.OPEN) {
+    throw new AppError("Cannot apply to a job that is not open!", 400);
+  }
+
+  const alreadyApplied = await prisma.application.findFirst({
+    where: {
+      jobId,
+      freelancerId: loggedUser.id,
+    },
+  });
+
+  // validated freelancer already applied or not
+  if (alreadyApplied) {
+    throw new AppError("You have already applied to this job!", 400);
+  }
+
+  // application reviews and scoring with AI
+  const aiInput = {
+    title: job.title,
+    skillsRequired: job.skillsRequired,
+    freelancerSkills: freelancer.skills,
+    coverNote: applicationData.coverNote,
+    proposedBudget: applicationData.proposedBudget,
+    jobBudget: job.budget,
+  };
+
+  const aiMatchScore = await aiMatchScoreService(aiInput);
+
+  // create application
+  const application = await prisma.application.create({
+    data: {
+      jobId: job.id,
+      freelancerId: user.id,
+      coverNote: applicationData.coverNote,
+      proposedBudget: new Decimal(applicationData.proposedBudget.toFixed(2)),
+      status: ApplicationStatus.PENDING,
+      aiMatchScore: Number(aiMatchScore?.aiMatchScore.toFixed(2)),
+      aiNote: aiMatchScore?.aiNote,
+    },
+  });
+
+  // realtime notification
+  const io = getIO();
+
+  io.to(job.employerId).emit("newApplication", {
+    message: "A new freelancer applied to your job!",
+
+    data: {
+      jobId: job.id,
+      jobTitle: job.title,
+      freelancerId: user.id,
+      freelancerName: user.name,
+      applicationId: application.id,
+    },
+  });
+
+  return application;
 };

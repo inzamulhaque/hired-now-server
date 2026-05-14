@@ -1,5 +1,5 @@
 import type { JwtPayload } from "jsonwebtoken";
-import type { IEnhancedDescription } from "./ai.interface.js";
+import type { IAIMatchInput, IEnhancedDescription } from "./ai.interface.js";
 import { Role } from "../../../generated/enums.js";
 import prisma from "../../../lib/prisma.js";
 import AppError from "../../utils/AppError.js";
@@ -107,4 +107,72 @@ export const enhanceDescriptionService = async (
   const content = aiResponse.choices[0]!.message.content;
 
   return JSON.parse(content!);
+};
+
+export const aiMatchScoreService = async (
+  input: IAIMatchInput,
+): Promise<{
+  aiMatchScore: number;
+  aiNote: string;
+}> => {
+  const prompt = `
+                  You are an AI hiring assistant.
+
+                  Analyze freelancer-job compatibility.
+
+                  Return:
+                  - match score (0-100)
+                  - short note (max 20 words)
+
+                  Job Title: ${input.title}
+
+                  Required Skills: ${input.skillsRequired.join(", ")}
+
+                  Freelancer Skills: ${input.freelancerSkills.join(", ")}
+
+                  Cover Note: ${input.coverNote}
+
+                  Job Budget: ${input.jobBudget}
+
+                  Proposed Budget: ${input.proposedBudget}
+
+                  Return valid JSON only:
+                  {
+                    "aiMatchScore": number,
+                    "aiNote": string
+                  }
+  `;
+
+  const aiResponse = await openai.chat.completions.create({
+    model: "openai/gpt-oss-120b:free",
+    messages: [
+      {
+        role: "system",
+        content: "You are an AI hiring assistant.",
+      },
+
+      {
+        role: "user",
+        content: prompt,
+      },
+    ],
+
+    temperature: 0.7,
+
+    stream: false,
+  });
+
+  const content = aiResponse.choices[0]!.message.content;
+
+  if (
+    JSON.parse(content!)?.aiMatchScore &&
+    JSON.parse(content!).aiMatchScore <= 100
+  ) {
+    return JSON.parse(content!);
+  } else {
+    return {
+      aiMatchScore: 0,
+      aiNote: "Unable to evaluate match score.",
+    };
+  }
 };

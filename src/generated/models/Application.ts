@@ -27,10 +27,12 @@ export type AggregateApplication = {
 }
 
 export type ApplicationAvgAggregateOutputType = {
+  proposedBudget: runtime.Decimal | null
   aiMatchScore: runtime.Decimal | null
 }
 
 export type ApplicationSumAggregateOutputType = {
+  proposedBudget: runtime.Decimal | null
   aiMatchScore: runtime.Decimal | null
 }
 
@@ -40,7 +42,9 @@ export type ApplicationMinAggregateOutputType = {
   freelancerId: string | null
   coverNote: string | null
   status: $Enums.ApplicationStatus | null
+  proposedBudget: runtime.Decimal | null
   aiMatchScore: runtime.Decimal | null
+  aiNote: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,7 +55,9 @@ export type ApplicationMaxAggregateOutputType = {
   freelancerId: string | null
   coverNote: string | null
   status: $Enums.ApplicationStatus | null
+  proposedBudget: runtime.Decimal | null
   aiMatchScore: runtime.Decimal | null
+  aiNote: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,7 +68,9 @@ export type ApplicationCountAggregateOutputType = {
   freelancerId: number
   coverNote: number
   status: number
+  proposedBudget: number
   aiMatchScore: number
+  aiNote: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,10 +78,12 @@ export type ApplicationCountAggregateOutputType = {
 
 
 export type ApplicationAvgAggregateInputType = {
+  proposedBudget?: true
   aiMatchScore?: true
 }
 
 export type ApplicationSumAggregateInputType = {
+  proposedBudget?: true
   aiMatchScore?: true
 }
 
@@ -83,7 +93,9 @@ export type ApplicationMinAggregateInputType = {
   freelancerId?: true
   coverNote?: true
   status?: true
+  proposedBudget?: true
   aiMatchScore?: true
+  aiNote?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,7 +106,9 @@ export type ApplicationMaxAggregateInputType = {
   freelancerId?: true
   coverNote?: true
   status?: true
+  proposedBudget?: true
   aiMatchScore?: true
+  aiNote?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,7 +119,9 @@ export type ApplicationCountAggregateInputType = {
   freelancerId?: true
   coverNote?: true
   status?: true
+  proposedBudget?: true
   aiMatchScore?: true
+  aiNote?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -201,9 +217,11 @@ export type ApplicationGroupByOutputType = {
   id: string
   jobId: string
   freelancerId: string
-  coverNote: string | null
+  coverNote: string
   status: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal
   aiMatchScore: runtime.Decimal | null
+  aiNote: string | null
   createdAt: Date
   updatedAt: Date
   _count: ApplicationCountAggregateOutputType | null
@@ -235,9 +253,11 @@ export type ApplicationWhereInput = {
   id?: Prisma.StringFilter<"Application"> | string
   jobId?: Prisma.StringFilter<"Application"> | string
   freelancerId?: Prisma.StringFilter<"Application"> | string
-  coverNote?: Prisma.StringNullableFilter<"Application"> | string | null
+  coverNote?: Prisma.StringFilter<"Application"> | string
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFilter<"Application"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.DecimalNullableFilter<"Application"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.StringNullableFilter<"Application"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
@@ -248,9 +268,11 @@ export type ApplicationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   jobId?: Prisma.SortOrder
   freelancerId?: Prisma.SortOrder
-  coverNote?: Prisma.SortOrderInput | Prisma.SortOrder
+  coverNote?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  proposedBudget?: Prisma.SortOrder
   aiMatchScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiNote?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   job?: Prisma.JobOrderByWithRelationInput
@@ -265,9 +287,11 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ApplicationWhereInput | Prisma.ApplicationWhereInput[]
   jobId?: Prisma.StringFilter<"Application"> | string
   freelancerId?: Prisma.StringFilter<"Application"> | string
-  coverNote?: Prisma.StringNullableFilter<"Application"> | string | null
+  coverNote?: Prisma.StringFilter<"Application"> | string
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFilter<"Application"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.DecimalNullableFilter<"Application"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.StringNullableFilter<"Application"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
@@ -278,9 +302,11 @@ export type ApplicationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   jobId?: Prisma.SortOrder
   freelancerId?: Prisma.SortOrder
-  coverNote?: Prisma.SortOrderInput | Prisma.SortOrder
+  coverNote?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  proposedBudget?: Prisma.SortOrder
   aiMatchScore?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiNote?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ApplicationCountOrderByAggregateInput
@@ -297,18 +323,22 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Application"> | string
   jobId?: Prisma.StringWithAggregatesFilter<"Application"> | string
   freelancerId?: Prisma.StringWithAggregatesFilter<"Application"> | string
-  coverNote?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
+  coverNote?: Prisma.StringWithAggregatesFilter<"Application"> | string
   status?: Prisma.EnumApplicationStatusWithAggregatesFilter<"Application"> | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalWithAggregatesFilter<"Application"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.DecimalNullableWithAggregatesFilter<"Application"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
 }
 
 export type ApplicationCreateInput = {
   id?: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
@@ -319,18 +349,22 @@ export type ApplicationUncheckedCreateInput = {
   id?: string
   jobId: string
   freelancerId: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ApplicationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
@@ -341,9 +375,11 @@ export type ApplicationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -352,18 +388,22 @@ export type ApplicationCreateManyInput = {
   id?: string
   jobId: string
   freelancerId: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ApplicationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -372,9 +412,11 @@ export type ApplicationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -400,12 +442,15 @@ export type ApplicationCountOrderByAggregateInput = {
   freelancerId?: Prisma.SortOrder
   coverNote?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  proposedBudget?: Prisma.SortOrder
   aiMatchScore?: Prisma.SortOrder
+  aiNote?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ApplicationAvgOrderByAggregateInput = {
+  proposedBudget?: Prisma.SortOrder
   aiMatchScore?: Prisma.SortOrder
 }
 
@@ -415,7 +460,9 @@ export type ApplicationMaxOrderByAggregateInput = {
   freelancerId?: Prisma.SortOrder
   coverNote?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  proposedBudget?: Prisma.SortOrder
   aiMatchScore?: Prisma.SortOrder
+  aiNote?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -426,12 +473,15 @@ export type ApplicationMinOrderByAggregateInput = {
   freelancerId?: Prisma.SortOrder
   coverNote?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  proposedBudget?: Prisma.SortOrder
   aiMatchScore?: Prisma.SortOrder
+  aiNote?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ApplicationSumOrderByAggregateInput = {
+  proposedBudget?: Prisma.SortOrder
   aiMatchScore?: Prisma.SortOrder
 }
 
@@ -525,9 +575,11 @@ export type EnumApplicationStatusFieldUpdateOperationsInput = {
 
 export type ApplicationCreateWithoutFreelancerInput = {
   id?: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
@@ -536,9 +588,11 @@ export type ApplicationCreateWithoutFreelancerInput = {
 export type ApplicationUncheckedCreateWithoutFreelancerInput = {
   id?: string
   jobId: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -576,18 +630,22 @@ export type ApplicationScalarWhereInput = {
   id?: Prisma.StringFilter<"Application"> | string
   jobId?: Prisma.StringFilter<"Application"> | string
   freelancerId?: Prisma.StringFilter<"Application"> | string
-  coverNote?: Prisma.StringNullableFilter<"Application"> | string | null
+  coverNote?: Prisma.StringFilter<"Application"> | string
   status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFilter<"Application"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.DecimalNullableFilter<"Application"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.StringNullableFilter<"Application"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
 }
 
 export type ApplicationCreateWithoutJobInput = {
   id?: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   freelancer: Prisma.UserCreateNestedOneWithoutApplicationsInput
@@ -596,9 +654,11 @@ export type ApplicationCreateWithoutJobInput = {
 export type ApplicationUncheckedCreateWithoutJobInput = {
   id?: string
   freelancerId: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -632,18 +692,22 @@ export type ApplicationUpdateManyWithWhereWithoutJobInput = {
 export type ApplicationCreateManyFreelancerInput = {
   id?: string
   jobId: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ApplicationUpdateWithoutFreelancerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
@@ -652,9 +716,11 @@ export type ApplicationUpdateWithoutFreelancerInput = {
 export type ApplicationUncheckedUpdateWithoutFreelancerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -662,9 +728,11 @@ export type ApplicationUncheckedUpdateWithoutFreelancerInput = {
 export type ApplicationUncheckedUpdateManyWithoutFreelancerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -672,18 +740,22 @@ export type ApplicationUncheckedUpdateManyWithoutFreelancerInput = {
 export type ApplicationCreateManyJobInput = {
   id?: string
   freelancerId: string
-  coverNote?: string | null
+  coverNote: string
   status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ApplicationUpdateWithoutJobInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   freelancer?: Prisma.UserUpdateOneRequiredWithoutApplicationsNestedInput
@@ -692,9 +764,11 @@ export type ApplicationUpdateWithoutJobInput = {
 export type ApplicationUncheckedUpdateWithoutJobInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -702,9 +776,11 @@ export type ApplicationUncheckedUpdateWithoutJobInput = {
 export type ApplicationUncheckedUpdateManyWithoutJobInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
-  coverNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -717,7 +793,9 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   freelancerId?: boolean
   coverNote?: boolean
   status?: boolean
+  proposedBudget?: boolean
   aiMatchScore?: boolean
+  aiNote?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -730,7 +808,9 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   freelancerId?: boolean
   coverNote?: boolean
   status?: boolean
+  proposedBudget?: boolean
   aiMatchScore?: boolean
+  aiNote?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -743,7 +823,9 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   freelancerId?: boolean
   coverNote?: boolean
   status?: boolean
+  proposedBudget?: boolean
   aiMatchScore?: boolean
+  aiNote?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -756,12 +838,14 @@ export type ApplicationSelectScalar = {
   freelancerId?: boolean
   coverNote?: boolean
   status?: boolean
+  proposedBudget?: boolean
   aiMatchScore?: boolean
+  aiNote?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobId" | "freelancerId" | "coverNote" | "status" | "aiMatchScore" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobId" | "freelancerId" | "coverNote" | "status" | "proposedBudget" | "aiMatchScore" | "aiNote" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -785,9 +869,11 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     jobId: string
     freelancerId: string
-    coverNote: string | null
+    coverNote: string
     status: $Enums.ApplicationStatus
+    proposedBudget: runtime.Decimal
     aiMatchScore: runtime.Decimal | null
+    aiNote: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["application"]>
@@ -1220,7 +1306,9 @@ export interface ApplicationFieldRefs {
   readonly freelancerId: Prisma.FieldRef<"Application", 'String'>
   readonly coverNote: Prisma.FieldRef<"Application", 'String'>
   readonly status: Prisma.FieldRef<"Application", 'ApplicationStatus'>
+  readonly proposedBudget: Prisma.FieldRef<"Application", 'Decimal'>
   readonly aiMatchScore: Prisma.FieldRef<"Application", 'Decimal'>
+  readonly aiNote: Prisma.FieldRef<"Application", 'String'>
   readonly createdAt: Prisma.FieldRef<"Application", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Application", 'DateTime'>
 }

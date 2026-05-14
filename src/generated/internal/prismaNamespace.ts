@@ -883,7 +883,9 @@ export const ApplicationScalarFieldEnum = {
   freelancerId: 'freelancerId',
   coverNote: 'coverNote',
   status: 'status',
+  proposedBudget: 'proposedBudget',
   aiMatchScore: 'aiMatchScore',
+  aiNote: 'aiNote',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

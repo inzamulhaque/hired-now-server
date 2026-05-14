@@ -1,6 +1,7 @@
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
 import {
+  createJobApplicationIntoDB,
   createNewJobIntoDB,
   getAllJobsFromDB,
   getJobByIdFromDB,
@@ -48,5 +49,24 @@ export const getJobById = catchAsync(async (req, res) => {
     statusCode: 200,
     message: "Job retrieved successfully!",
     data: job,
+  });
+});
+
+export const createJobApplication = catchAsync(async (req, res) => {
+  const user = req.user!;
+  const { jobId } = req.params;
+  const applicationData = req.body;
+
+  const result = await createJobApplicationIntoDB(
+    user,
+    jobId as string,
+    applicationData,
+  );
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 201,
+    message: "Application submitted successfully!",
+    data: result,
   });
 });

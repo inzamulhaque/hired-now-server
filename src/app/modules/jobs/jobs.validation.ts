@@ -16,3 +16,17 @@ export const createNewJobValidationSchema = z.object({
     jobType: z.enum(JobType, "Job type must be either FIXED or HOURLY!"),
   }),
 });
+
+export const applyJobValidationSchema = z.object({
+  body: z.object({
+    coverNote: z
+      .string()
+      .trim()
+      .min(20, "Cover note must be at least 20 characters")
+      .max(1000, "Cover note cannot exceed 1000 characters"),
+
+    proposedBudget: z
+      .number()
+      .positive("Proposed budget must be greater than 0"),
+  }),
+});
