@@ -72,3 +72,15 @@ export const getAllJobsFromDB = async (payload: ISearchParams) => {
     },
   };
 };
+
+export const getJobByIdFromDB = async (jobId: string) => {
+  const job = await prisma.job.findUnique({
+    where: { id: jobId },
+  });
+
+  if (!job) {
+    throw new AppError("Job not found!", 404);
+  }
+
+  return job;
+};

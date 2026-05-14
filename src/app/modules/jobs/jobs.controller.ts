@@ -1,6 +1,10 @@
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
-import { createNewJobIntoDB, getAllJobsFromDB } from "./jobs.service.js";
+import {
+  createNewJobIntoDB,
+  getAllJobsFromDB,
+  getJobByIdFromDB,
+} from "./jobs.service.js";
 import { searchableFields } from "./jobs.constants.js";
 
 export const createNewJob = catchAsync(async (req, res) => {
@@ -31,5 +35,18 @@ export const getAllJobs = catchAsync(async (req, res) => {
     message: "Jobs retrieved successfully!",
     meta,
     data: jobs,
+  });
+});
+
+export const getJobById = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const job = await getJobByIdFromDB(id as string);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Job retrieved successfully!",
+    data: job,
   });
 });
