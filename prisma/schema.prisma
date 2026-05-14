@@ -28,6 +28,7 @@ model User {
   otp               Otp[]
   freelancerProfile FreelancerProfile?
   jobs              Job[]              @relation("EmployerJobs")
+  applications      Application[]      @relation("FreelancerApplications")
 
   @@index([role])
   @@map("users")
@@ -81,11 +82,32 @@ model Job {
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
 
-  employer User @relation("EmployerJobs", fields: [employerId], references: [id])
+  employer     User          @relation("EmployerJobs", fields: [employerId], references: [id])
+  applications Application[]
 
   @@index([employerId])
   @@index([status])
   @@map("jobs")
+}
+
+model Application {
+  id           String            @id @default(uuid())
+  jobId        String
+  freelancerId String
+  coverNote    String?
+  status       ApplicationStatus @default(PENDING)
+  aiMatchScore Decimal?          @db.Decimal(3, 2)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  job        Job  @relation(fields: [jobId], references: [id])
+  freelancer User @relation("FreelancerApplications", fields: [freelancerId], references: [id])
+
+  @@unique([jobId, freelancerId])
+  @@index([jobId])
+  @@index([freelancerId])
+  @@index([status])
+  @@map("applications")
 }
 
 enum Role {
@@ -119,4 +141,12 @@ enum JobStatus {
   OPEN
   CLOSED
   FILLED
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWED
+  SHORTLISTED
+  REJECTED
+  HIRED
 }

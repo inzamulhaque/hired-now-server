@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   Otp: 'Otp',
   FreelancerProfile: 'FreelancerProfile',
-  Job: 'Job'
+  Job: 'Job',
+  Application: 'Application'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -131,6 +132,20 @@ export const JobScalarFieldEnum = {
 } as const
 
 export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
+
+
+export const ApplicationScalarFieldEnum = {
+  id: 'id',
+  jobId: 'jobId',
+  freelancerId: 'freelancerId',
+  coverNote: 'coverNote',
+  status: 'status',
+  aiMatchScore: 'aiMatchScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
 
 
 export const SortOrder = {
