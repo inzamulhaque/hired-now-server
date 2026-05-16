@@ -3,6 +3,7 @@ import sendResponse from "../../utils/sendResponse.js";
 import {
   createJobApplicationIntoDB,
   createNewJobIntoDB,
+  getAllApplicationByJobIdFromDB,
   getAllJobsFromDB,
   getJobByIdFromDB,
 } from "./jobs.service.js";
@@ -67,6 +68,20 @@ export const createJobApplication = catchAsync(async (req, res) => {
     success: true,
     statusCode: 201,
     message: "Application submitted successfully!",
+    data: result,
+  });
+});
+
+export const getAllApplicationByJobId = catchAsync(async (req, res) => {
+  const { jobId } = req.params;
+  const user = req.user!;
+
+  const result = await getAllApplicationByJobIdFromDB(user, jobId as string);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Applications retrieved successfully!",
     data: result,
   });
 });

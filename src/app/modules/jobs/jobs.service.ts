@@ -188,3 +188,52 @@ export const createJobApplicationIntoDB = async (
 
   return application;
 };
+
+export const getAllApplicationByJobIdFromDB = async (
+  loggedUser: JwtPayload,
+  jobId: string,
+) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: loggedUser.id,
+      role: Role.EMPLOYER,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  const job = await prisma.job.findUnique({
+    where: {
+      id: jobId,
+    },
+  });
+
+  if (!job) {
+    throw new AppError("Job not found!", 404);
+  }
+
+  if (job.employerId !== user.id) {
+    throw new AppError(
+      "You are not authorized to view applications for this job!",
+      403,
+    );
+  }
+
+  const applications = await prisma.application.findMany({
+    where: {
+      jobId,
+    },
+    include: {
+      freelancer: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
+    },
+  });
+
+  return applications;
+};

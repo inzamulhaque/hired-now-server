@@ -9,6 +9,7 @@ import {
 import {
   createJobApplication,
   createNewJob,
+  getAllApplicationByJobId,
   getAllJobs,
   getJobById,
 } from "./jobs.controller.js";
@@ -31,6 +32,12 @@ router.post(
   auth(Role.FREELANCER),
   validateRequest(applyJobValidationSchema),
   createJobApplication,
+);
+
+router.get(
+  "/:jobId/applications",
+  auth(Role.EMPLOYER),
+  getAllApplicationByJobId,
 );
 
 const JobRouters = router;
