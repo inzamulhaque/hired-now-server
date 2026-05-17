@@ -6,6 +6,7 @@ import {
   applyJobValidationSchema,
   createNewJobValidationSchema,
   updateApplicationStatusValidationSchema,
+  updateJobStatusValidationSchema,
 } from "./jobs.validation.js";
 import {
   createJobApplication,
@@ -14,6 +15,7 @@ import {
   getAllJobs,
   getJobById,
   updateApplicationStatus,
+  updateJobStatus,
 } from "./jobs.controller.js";
 
 const router = express.Router();
@@ -47,6 +49,13 @@ router.patch(
   auth(Role.EMPLOYER),
   validateRequest(updateApplicationStatusValidationSchema),
   updateApplicationStatus,
+);
+
+router.patch(
+  "/:jobId/status",
+  auth(Role.EMPLOYER),
+  validateRequest(updateJobStatusValidationSchema),
+  updateJobStatus,
 );
 
 const JobRouters = router;

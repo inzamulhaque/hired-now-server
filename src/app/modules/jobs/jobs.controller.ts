@@ -7,6 +7,7 @@ import {
   getAllJobsFromDB,
   getJobByIdFromDB,
   updateApplicationStatusIntoDB,
+  updateJobStatusIntoDB,
 } from "./jobs.service.js";
 import { searchableFields } from "./jobs.constants.js";
 
@@ -102,6 +103,21 @@ export const updateApplicationStatus = catchAsync(async (req, res) => {
     success: true,
     statusCode: 200,
     message: "Application status updated successfully!",
+    data: result,
+  });
+});
+
+export const updateJobStatus = catchAsync(async (req, res) => {
+  const user = req.user!;
+  const { jobId } = req.params;
+  const { status } = req.body;
+
+  const result = await updateJobStatusIntoDB(user, jobId as string, status);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Job status updated successfully!",
     data: result,
   });
 });

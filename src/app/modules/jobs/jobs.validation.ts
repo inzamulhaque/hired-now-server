@@ -1,5 +1,9 @@
 import z from "zod";
-import { ApplicationStatus, JobType } from "../../../generated/enums.js";
+import {
+  ApplicationStatus,
+  JobStatus,
+  JobType,
+} from "../../../generated/enums.js";
 
 export const createNewJobValidationSchema = z.object({
   body: z.object({
@@ -37,5 +41,11 @@ export const updateApplicationStatusValidationSchema = z.object({
       ApplicationStatus,
       "Status must be either REVIEWED, SHORTLISTED, HIRED, or REJECTED!",
     ),
+  }),
+});
+
+export const updateJobStatusValidationSchema = z.object({
+  body: z.object({
+    status: z.enum(JobStatus, "Status must be either OPEN, FILLED, or CLOSED!"),
   }),
 });

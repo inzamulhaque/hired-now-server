@@ -317,3 +317,50 @@ export const updateApplicationStatusIntoDB = async (
 
   return updatedApplication;
 };
+
+export const updateJobStatusIntoDB = async (
+  loggedUser: JwtPayload,
+  jobId: string,
+  status: JobStatus,
+) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: loggedUser.id,
+      role: Role.EMPLOYER,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  const job = await prisma.job.findUnique({
+    where: { id: jobId },
+  });
+
+  if (!job) {
+    throw new AppError("Job not found!", 404);
+  }
+
+  if (job.employerId !== user.id) {
+    throw new AppError(
+      "You are not authorized to update status for this job!",
+      403,
+    );
+  }
+
+  if (job.status !== JobStatus.FILLED) {
+    throw new AppError("You can only update the status of a filled job!", 400);
+  }
+
+  if (status !== JobStatus.CLOSED) {
+    throw new AppError("Job status can only be updated to CLOSED!", 400);
+  }
+
+  const updatedJobStatus = await prisma.job.update({
+    where: { id: jobId },
+    data: { status },
+  });
+
+  return updatedJobStatus;
+};
