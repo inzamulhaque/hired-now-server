@@ -4,6 +4,7 @@ import UserRouters from "../app/modules/users/user.route.js";
 import FreelancerRouters from "../app/modules/freelancers/freelancers.route.js";
 import JobRouters from "../app/modules/jobs/jobs.route.js";
 import AIRouters from "../app/modules/AI/ai.route.js";
+import AdminRouters from "../app/modules/admin/admin.route.js";
 
 const router = Router();
 
@@ -31,6 +32,11 @@ const moduleRouters = [
   {
     path: "/ai",
     route: AIRouters,
+  },
+
+  {
+    path: "/admin",
+    route: AdminRouters,
   },
 ];
 
