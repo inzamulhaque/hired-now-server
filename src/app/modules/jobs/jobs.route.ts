@@ -5,6 +5,7 @@ import validateRequest from "../../middlewares/validateRequest.js";
 import {
   applyJobValidationSchema,
   createNewJobValidationSchema,
+  updateApplicationStatusValidationSchema,
 } from "./jobs.validation.js";
 import {
   createJobApplication,
@@ -12,6 +13,7 @@ import {
   getAllApplicationByJobId,
   getAllJobs,
   getJobById,
+  updateApplicationStatus,
 } from "./jobs.controller.js";
 
 const router = express.Router();
@@ -38,6 +40,13 @@ router.get(
   "/:jobId/applications",
   auth(Role.EMPLOYER),
   getAllApplicationByJobId,
+);
+
+router.patch(
+  "/applications/:applicationId/status",
+  auth(Role.EMPLOYER),
+  validateRequest(updateApplicationStatusValidationSchema),
+  updateApplicationStatus,
 );
 
 const JobRouters = router;

@@ -1,5 +1,5 @@
 import z from "zod";
-import { JobType } from "../../../generated/enums.js";
+import { ApplicationStatus, JobType } from "../../../generated/enums.js";
 
 export const createNewJobValidationSchema = z.object({
   body: z.object({
@@ -28,5 +28,14 @@ export const applyJobValidationSchema = z.object({
     proposedBudget: z
       .number()
       .positive("Proposed budget must be greater than 0"),
+  }),
+});
+
+export const updateApplicationStatusValidationSchema = z.object({
+  body: z.object({
+    status: z.enum(
+      ApplicationStatus,
+      "Status must be either REVIEWED, SHORTLISTED, HIRED, or REJECTED!",
+    ),
   }),
 });

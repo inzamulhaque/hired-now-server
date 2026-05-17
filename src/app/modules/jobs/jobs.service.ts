@@ -237,3 +237,83 @@ export const getAllApplicationByJobIdFromDB = async (
 
   return applications;
 };
+
+export const updateApplicationStatusIntoDB = async (
+  loggedUser: JwtPayload,
+  applicationId: string,
+  status: ApplicationStatus,
+) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      id: loggedUser.id,
+      role: Role.EMPLOYER,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  const application = await prisma.application.findUnique({
+    where: {
+      id: applicationId,
+    },
+  });
+
+  if (!application) {
+    throw new AppError("Application not found!", 404);
+  }
+
+  const job = await prisma.job.findFirst({
+    where: {
+      id: application.jobId,
+    },
+  });
+
+  if (!job) {
+    throw new AppError("Job not found!", 404);
+  }
+
+  if (job.employerId !== user.id) {
+    throw new AppError(
+      "You are not authorized to update applications Status for this job!",
+      403,
+    );
+  }
+
+  const updatedApplication = await prisma.$transaction(async (tc) => {
+    const updated = await tc.application.update({
+      where: {
+        id: applicationId,
+      },
+      data: {
+        status,
+      },
+    });
+
+    // status change to HIRED then automatically reject others applications and job status also change to FILLED
+    if (status === ApplicationStatus.HIRED) {
+      await tc.application.updateMany({
+        where: {
+          jobId: application.jobId,
+          id: { not: applicationId },
+        },
+        data: {
+          status: ApplicationStatus.REJECTED,
+        },
+      });
+
+      await tc.job.update({
+        where: {
+          id: application.jobId,
+        },
+        data: {
+          status: JobStatus.FILLED,
+        },
+      });
+    }
+    return updated;
+  });
+
+  return updatedApplication;
+};
