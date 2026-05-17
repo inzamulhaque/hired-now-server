@@ -1,6 +1,6 @@
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
-import { updateUserInfoIntoDB } from "./user.service.js";
+import { getMyProfileFromDB, updateUserInfoIntoDB } from "./user.service.js";
 
 export const updateUserInfo = catchAsync(async (req, res) => {
   const user = req.user!;
@@ -11,6 +11,19 @@ export const updateUserInfo = catchAsync(async (req, res) => {
     success: true,
     statusCode: 200,
     message: "User information updated successfully!",
+    data: result,
+  });
+});
+
+export const getMyProfile = catchAsync(async (req, res) => {
+  const user = req.user!;
+
+  const result = await getMyProfileFromDB(user);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "User profile retrieved successfully!",
     data: result,
   });
 });

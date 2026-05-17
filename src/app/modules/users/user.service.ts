@@ -3,7 +3,7 @@ import type { JwtPayload } from "jsonwebtoken";
 import type { IUser } from "./user.interface.js";
 import prisma from "../../../lib/prisma.js";
 import AppError from "../../utils/AppError.js";
-import { AccountStatus } from "../../../generated/enums.js";
+import { AccountStatus, Role } from "../../../generated/enums.js";
 
 export const updateUserInfoIntoDB = async (
   loggedUser: JwtPayload,
@@ -49,4 +49,34 @@ export const updateUserInfoIntoDB = async (
   });
 
   return result;
+};
+
+export const getMyProfileFromDB = async (loggedUser: JwtPayload) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: loggedUser.userId,
+    },
+    select: {
+      name: true,
+      email: true,
+      status: true,
+      role: true,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  let freelancerProfile = null;
+
+  if (user.role === Role.FREELANCER) {
+    freelancerProfile = await prisma.freelancerProfile.findFirst({
+      where: {
+        userId: loggedUser.userId,
+      },
+    });
+  }
+
+  return { ...user, freelancerProfile };
 };
