@@ -5,6 +5,7 @@ import FreelancerRouters from "../app/modules/freelancers/freelancers.route.js";
 import JobRouters from "../app/modules/jobs/jobs.route.js";
 import AIRouters from "../app/modules/AI/ai.route.js";
 import AdminRouters from "../app/modules/admin/admin.route.js";
+import SuperAdminRouters from "../app/modules/superAdmin/superAdmin.route.js";
 
 const router = Router();
 
@@ -37,6 +38,11 @@ const moduleRouters = [
   {
     path: "/admin",
     route: AdminRouters,
+  },
+
+  {
+    path: "/super-admin",
+    route: SuperAdminRouters,
   },
 ];
 
