@@ -84,7 +84,7 @@ export const signinService = async (email: string, password: string) => {
     throw new AppError("User not found!", 404);
   }
 
-  if (user.status === "PENDING_VERIFICATION") {
+  if (user.status === AccountStatus.PENDING_VERIFICATION) {
     // generate otp code
     const otpPayload = await generateOtpCode();
 
@@ -113,18 +113,18 @@ export const signinService = async (email: string, password: string) => {
     );
   }
 
-  if (user.status === "BANNED") {
+  if (user.status === AccountStatus.BANNED) {
+    throw new AppError("Your account has been permanently banned!", 403);
+  }
+
+  if (user.status === AccountStatus.SUSPENDED) {
     throw new AppError(
-      "Your account has been banned. Please contact support for further assistance!",
+      "Your account has been suspended. Please contact support for further assistance!",
       403,
     );
   }
 
-  if (user.status === "SUSPENDED") {
-    throw new AppError("Your account has been permanently suspended!", 403);
-  }
-
-  if (user.status === "DELETED") {
+  if (user.status === AccountStatus.DELETED) {
     throw new AppError("Your account has been permanently deleted!", 403);
   }
 

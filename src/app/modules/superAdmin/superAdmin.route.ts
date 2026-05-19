@@ -5,6 +5,7 @@ import validateRequest from "../../middlewares/validateRequest.js";
 import { createNewAdminValidationSchema } from "./superAdmin.validation.js";
 import {
   createNewAdmin,
+  reactivateAdminAccount,
   suspendAdminAccount,
 } from "./superAdmin.controller.js";
 
@@ -21,6 +22,12 @@ router.patch(
   "/suspend-admin/:adminId",
   auth(Role.SUPER_ADMIN),
   suspendAdminAccount,
+);
+
+router.patch(
+  "/reactivate-admin/:adminId",
+  auth(Role.SUPER_ADMIN),
+  reactivateAdminAccount,
 );
 
 const SuperAdminRouters = router;
