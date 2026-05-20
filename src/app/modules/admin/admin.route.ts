@@ -1,7 +1,11 @@
 import express from "express";
 import auth from "../../middlewares/auth.js";
 import { Role } from "../../../generated/enums.js";
-import { getAllUser, suspendUser } from "./admin.controller.js";
+import {
+  getAllUser,
+  reactivateSuspendedUser,
+  suspendUser,
+} from "./admin.controller.js";
 
 const router = express.Router();
 
@@ -11,6 +15,12 @@ router.patch(
   "/suspend-user/:userId",
   auth(Role.ADMIN, Role.SUPER_ADMIN),
   suspendUser,
+);
+
+router.patch(
+  "/reactivate-user/:userId",
+  auth(Role.ADMIN, Role.SUPER_ADMIN),
+  reactivateSuspendedUser,
 );
 
 const AdminRouters = router;

@@ -56,12 +56,62 @@ export const suspendUserIntoDB = async (
     throw new AppError("Cannot suspend an admin user!", 403);
   }
 
+  if (
+    user.status !== AccountStatus.ACTIVE &&
+    user.status !== AccountStatus.INACTIVE
+  ) {
+    throw new AppError("User is not active or inactive!", 400);
+  }
+
   const updatedUser = await prisma.user.update({
     where: {
       id: userId,
     },
     data: {
       status: AccountStatus.SUSPENDED,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      status: true,
+    },
+  });
+
+  return updatedUser;
+};
+
+export const reactivateSuspendedUserIntoDB = async (
+  loggedUser: JwtPayload,
+  userId: string,
+) => {
+  const admin = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: loggedUser.userId,
+    },
+  });
+
+  if (admin.role !== Role.ADMIN && admin.role !== Role.SUPER_ADMIN) {
+    throw new AppError("Unauthorized!", 401);
+  }
+
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (user.status !== AccountStatus.SUSPENDED) {
+    throw new AppError("User is not suspended!", 400);
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      status: AccountStatus.ACTIVE,
     },
     select: {
       id: true,
