@@ -2,16 +2,35 @@ import type { JwtPayload } from "jsonwebtoken";
 import { AccountStatus, Role } from "../../../generated/enums.js";
 import AppError from "../../utils/AppError.js";
 import prisma from "../../../lib/prisma.js";
+import type { ISearchParams } from "../../utils/buildSearchQuery.js";
+import buildSearchQuery from "../../utils/buildSearchQuery.js";
+import type { Prisma } from "../../../generated/client.js";
+import calTotalPages from "../../utils/calTotalPages.js";
 
-export const getAllUserFromDB = async (loggedUser: JwtPayload) => {
+export const getAllUserFromDB = async (
+  loggedUser: JwtPayload,
+  payload: ISearchParams,
+) => {
+  const { where, skip, take, orderBy, page } = buildSearchQuery<
+    Prisma.UserWhereInput,
+    Prisma.UserOrderByWithRelationInput
+  >(payload);
+
   if (loggedUser.role !== Role.ADMIN && loggedUser.role !== Role.SUPER_ADMIN) {
     throw new AppError("Unauthorized!", 401);
   }
 
+  console.log(where, skip, take, orderBy, page);
+
   const users = await prisma.user.findMany({
     where: {
+      ...where,
       OR: [{ role: Role.EMPLOYER }, { role: Role.FREELANCER }],
     },
+
+    skip,
+    take: Number(take),
+    orderBy,
 
     select: {
       id: true,
@@ -22,7 +41,26 @@ export const getAllUserFromDB = async (loggedUser: JwtPayload) => {
     },
   });
 
-  return users;
+  const totalUser = await prisma.user.count({
+    where: {
+      ...where,
+      OR: [{ role: Role.EMPLOYER }, { role: Role.FREELANCER }],
+    },
+  });
+  const totalPages = calTotalPages(totalUser, take);
+
+  if (totalPages !== 0 && totalUser < page) {
+    throw new AppError("Page number exceeds total pages available!", 400);
+  }
+
+  return {
+    users,
+    meta: {
+      page: Number(page),
+      total: totalUser,
+      totalPages,
+    },
+  };
 };
 
 export const suspendUserIntoDB = async (
@@ -112,6 +150,56 @@ export const reactivateSuspendedUserIntoDB = async (
     },
     data: {
       status: AccountStatus.ACTIVE,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      status: true,
+    },
+  });
+
+  return updatedUser;
+};
+
+export const bannedUserIntoDB = async (
+  loggedUser: JwtPayload,
+  userId: string,
+) => {
+  const admin = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: loggedUser.userId,
+    },
+  });
+
+  if (admin.role !== Role.ADMIN && admin.role !== Role.SUPER_ADMIN) {
+    throw new AppError("Unauthorized!", 401);
+  }
+
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: userId,
+    },
+  });
+
+  if (user.role === Role.ADMIN || user.role === Role.SUPER_ADMIN) {
+    throw new AppError("Cannot ban an admin user!", 403);
+  }
+
+  if (
+    user.status !== AccountStatus.ACTIVE &&
+    user.status !== AccountStatus.INACTIVE
+  ) {
+    throw new AppError("User is not active or inactive!", 400);
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      status: AccountStatus.BANNED,
     },
     select: {
       id: true,

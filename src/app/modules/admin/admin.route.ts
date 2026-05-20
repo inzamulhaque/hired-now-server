@@ -2,6 +2,7 @@ import express from "express";
 import auth from "../../middlewares/auth.js";
 import { Role } from "../../../generated/enums.js";
 import {
+  bannedUser,
   getAllUser,
   reactivateSuspendedUser,
   suspendUser,
@@ -21,6 +22,12 @@ router.patch(
   "/reactivate-user/:userId",
   auth(Role.ADMIN, Role.SUPER_ADMIN),
   reactivateSuspendedUser,
+);
+
+router.patch(
+  "/ban-user/:userId",
+  auth(Role.ADMIN, Role.SUPER_ADMIN),
+  bannedUser,
 );
 
 const AdminRouters = router;
