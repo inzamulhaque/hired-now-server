@@ -1,6 +1,7 @@
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
 import {
+  bannedAdminFromDB,
   createNewAdminIntoDB,
   reactivateAdminAccountIntoDB,
   suspendAdminAccountIntoDB,
@@ -44,6 +45,20 @@ export const reactivateAdminAccount = catchAsync(async (req, res) => {
     statusCode: 200,
     success: true,
     message: "Admin account reactivated successfully!",
+    data: result,
+  });
+});
+
+export const bannedAdmin = catchAsync(async (req, res) => {
+  const user = req.user!;
+  const { adminId } = req.params;
+
+  const result = await bannedAdminFromDB(user, adminId as string);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Admin account banned successfully!",
     data: result,
   });
 });

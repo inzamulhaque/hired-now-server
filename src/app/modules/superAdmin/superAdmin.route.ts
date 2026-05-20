@@ -4,6 +4,7 @@ import { Role } from "../../../generated/enums.js";
 import validateRequest from "../../middlewares/validateRequest.js";
 import { createNewAdminValidationSchema } from "./superAdmin.validation.js";
 import {
+  bannedAdmin,
   createNewAdmin,
   reactivateAdminAccount,
   suspendAdminAccount,
@@ -29,6 +30,8 @@ router.patch(
   auth(Role.SUPER_ADMIN),
   reactivateAdminAccount,
 );
+
+router.patch("/banned-admin/:adminId", auth(Role.SUPER_ADMIN), bannedAdmin);
 
 const SuperAdminRouters = router;
 export default SuperAdminRouters;

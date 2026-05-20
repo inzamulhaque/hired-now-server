@@ -188,3 +188,66 @@ export const reactivateAdminAccountIntoDB = async (
 
   return updatedAdmin;
 };
+
+export const bannedAdminFromDB = async (
+  loggedUser: JwtPayload,
+  adminId: string,
+) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: loggedUser.userId,
+    },
+  });
+
+  if (!user) {
+    throw new AppError("User not found!", 404);
+  }
+
+  if (user.role !== Role.SUPER_ADMIN) {
+    throw new AppError("Only super admin can banned admin account!", 403);
+  }
+
+  const admin = await prisma.user.findUnique({
+    where: {
+      id: adminId,
+    },
+  });
+
+  if (!admin) {
+    throw new AppError("Admin not found!", 404);
+  }
+
+  if (admin.role !== Role.ADMIN) {
+    throw new AppError("The specified user is not an admin!", 400);
+  }
+
+  if (
+    admin.status !== AccountStatus.ACTIVE &&
+    admin.status !== AccountStatus.INACTIVE
+  ) {
+    throw new AppError(
+      "Only active or inactive admin accounts can be banned!",
+      400,
+    );
+  }
+
+  const updatedAdmin = await prisma.user.update({
+    where: {
+      id: adminId,
+    },
+
+    data: {
+      status: AccountStatus.BANNED,
+    },
+
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      status: true,
+    },
+  });
+
+  return updatedAdmin;
+};
