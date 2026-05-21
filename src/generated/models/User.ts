@@ -218,6 +218,8 @@ export type UserWhereInput = {
   freelancerProfile?: Prisma.XOR<Prisma.FreelancerProfileNullableScalarRelationFilter, Prisma.FreelancerProfileWhereInput> | null
   jobs?: Prisma.JobListRelationFilter
   applications?: Prisma.ApplicationListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
+  freelancerPayments?: Prisma.PaymentListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -234,6 +236,8 @@ export type UserOrderByWithRelationInput = {
   freelancerProfile?: Prisma.FreelancerProfileOrderByWithRelationInput
   jobs?: Prisma.JobOrderByRelationAggregateInput
   applications?: Prisma.ApplicationOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
+  freelancerPayments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -253,6 +257,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   freelancerProfile?: Prisma.XOR<Prisma.FreelancerProfileNullableScalarRelationFilter, Prisma.FreelancerProfileWhereInput> | null
   jobs?: Prisma.JobListRelationFilter
   applications?: Prisma.ApplicationListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
+  freelancerPayments?: Prisma.PaymentListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -299,6 +305,8 @@ export type UserCreateInput = {
   freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -315,6 +323,8 @@ export type UserUncheckedCreateInput = {
   freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserUpdateInput = {
@@ -331,6 +341,8 @@ export type UserUpdateInput = {
   freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -347,6 +359,8 @@ export type UserUncheckedUpdateInput = {
   freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -502,6 +516,34 @@ export type UserUpdateOneRequiredWithoutApplicationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutApplicationsInput, Prisma.UserUpdateWithoutApplicationsInput>, Prisma.UserUncheckedUpdateWithoutApplicationsInput>
 }
 
+export type UserCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutFreelancerPaymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFreelancerPaymentsInput, Prisma.UserUncheckedCreateWithoutFreelancerPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFreelancerPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.UserUpsertWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserUpdateOneRequiredWithoutFreelancerPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFreelancerPaymentsInput, Prisma.UserUncheckedCreateWithoutFreelancerPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFreelancerPaymentsInput
+  upsert?: Prisma.UserUpsertWithoutFreelancerPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFreelancerPaymentsInput, Prisma.UserUpdateWithoutFreelancerPaymentsInput>, Prisma.UserUncheckedUpdateWithoutFreelancerPaymentsInput>
+}
+
 export type UserCreateWithoutOtpInput = {
   id?: string
   email: string
@@ -515,6 +557,8 @@ export type UserCreateWithoutOtpInput = {
   freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserUncheckedCreateWithoutOtpInput = {
@@ -530,6 +574,8 @@ export type UserUncheckedCreateWithoutOtpInput = {
   freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserCreateOrConnectWithoutOtpInput = {
@@ -561,6 +607,8 @@ export type UserUpdateWithoutOtpInput = {
   freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpInput = {
@@ -576,6 +624,8 @@ export type UserUncheckedUpdateWithoutOtpInput = {
   freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserCreateWithoutFreelancerProfileInput = {
@@ -591,6 +641,8 @@ export type UserCreateWithoutFreelancerProfileInput = {
   otp?: Prisma.OtpCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserUncheckedCreateWithoutFreelancerProfileInput = {
@@ -606,6 +658,8 @@ export type UserUncheckedCreateWithoutFreelancerProfileInput = {
   otp?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserCreateOrConnectWithoutFreelancerProfileInput = {
@@ -637,6 +691,8 @@ export type UserUpdateWithoutFreelancerProfileInput = {
   otp?: Prisma.OtpUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFreelancerProfileInput = {
@@ -652,6 +708,8 @@ export type UserUncheckedUpdateWithoutFreelancerProfileInput = {
   otp?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserCreateWithoutJobsInput = {
@@ -667,6 +725,8 @@ export type UserCreateWithoutJobsInput = {
   otp?: Prisma.OtpCreateNestedManyWithoutUserInput
   freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserUncheckedCreateWithoutJobsInput = {
@@ -682,6 +742,8 @@ export type UserUncheckedCreateWithoutJobsInput = {
   otp?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserCreateOrConnectWithoutJobsInput = {
@@ -713,6 +775,8 @@ export type UserUpdateWithoutJobsInput = {
   otp?: Prisma.OtpUpdateManyWithoutUserNestedInput
   freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutJobsInput = {
@@ -728,6 +792,8 @@ export type UserUncheckedUpdateWithoutJobsInput = {
   otp?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserCreateWithoutApplicationsInput = {
@@ -743,6 +809,8 @@ export type UserCreateWithoutApplicationsInput = {
   otp?: Prisma.OtpCreateNestedManyWithoutUserInput
   freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
   jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserUncheckedCreateWithoutApplicationsInput = {
@@ -758,6 +826,8 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   otp?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
   freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
 }
 
 export type UserCreateOrConnectWithoutApplicationsInput = {
@@ -789,6 +859,8 @@ export type UserUpdateWithoutApplicationsInput = {
   otp?: Prisma.OtpUpdateManyWithoutUserNestedInput
   freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
   jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApplicationsInput = {
@@ -804,6 +876,176 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   otp?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
   freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
   jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
+}
+
+export type UserCreateWithoutPaymentsInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role: $Enums.Role
+  status?: $Enums.AccountStatus
+  previousPassword?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otp?: Prisma.OtpCreateNestedManyWithoutUserInput
+  freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
+  jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
+  freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
+}
+
+export type UserUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role: $Enums.Role
+  status?: $Enums.AccountStatus
+  previousPassword?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otp?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
+  freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
+}
+
+export type UserCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+}
+
+export type UserCreateWithoutFreelancerPaymentsInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role: $Enums.Role
+  status?: $Enums.AccountStatus
+  previousPassword?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otp?: Prisma.OtpCreateNestedManyWithoutUserInput
+  freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
+  jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
+}
+
+export type UserUncheckedCreateWithoutFreelancerPaymentsInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role: $Enums.Role
+  status?: $Enums.AccountStatus
+  previousPassword?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otp?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
+}
+
+export type UserCreateOrConnectWithoutFreelancerPaymentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFreelancerPaymentsInput, Prisma.UserUncheckedCreateWithoutFreelancerPaymentsInput>
+}
+
+export type UserUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otp?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
+  freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otp?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
+  freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
+}
+
+export type UserUpsertWithoutFreelancerPaymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFreelancerPaymentsInput, Prisma.UserUncheckedUpdateWithoutFreelancerPaymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFreelancerPaymentsInput, Prisma.UserUncheckedCreateWithoutFreelancerPaymentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFreelancerPaymentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFreelancerPaymentsInput, Prisma.UserUncheckedUpdateWithoutFreelancerPaymentsInput>
+}
+
+export type UserUpdateWithoutFreelancerPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otp?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFreelancerPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otp?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
 }
 
 
@@ -815,12 +1057,16 @@ export type UserCountOutputType = {
   otp: number
   jobs: number
   applications: number
+  payments: number
+  freelancerPayments: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   otp?: boolean | UserCountOutputTypeCountOtpArgs
   jobs?: boolean | UserCountOutputTypeCountJobsArgs
   applications?: boolean | UserCountOutputTypeCountApplicationsArgs
+  payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+  freelancerPayments?: boolean | UserCountOutputTypeCountFreelancerPaymentsArgs
 }
 
 /**
@@ -854,6 +1100,20 @@ export type UserCountOutputTypeCountApplicationsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.ApplicationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFreelancerPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -869,6 +1129,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   freelancerProfile?: boolean | Prisma.User$freelancerProfileArgs<ExtArgs>
   jobs?: boolean | Prisma.User$jobsArgs<ExtArgs>
   applications?: boolean | Prisma.User$applicationsArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  freelancerPayments?: boolean | Prisma.User$freelancerPaymentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -914,6 +1176,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   freelancerProfile?: boolean | Prisma.User$freelancerProfileArgs<ExtArgs>
   jobs?: boolean | Prisma.User$jobsArgs<ExtArgs>
   applications?: boolean | Prisma.User$applicationsArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  freelancerPayments?: boolean | Prisma.User$freelancerPaymentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -926,6 +1190,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     freelancerProfile: Prisma.$FreelancerProfilePayload<ExtArgs> | null
     jobs: Prisma.$JobPayload<ExtArgs>[]
     applications: Prisma.$ApplicationPayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
+    freelancerPayments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1335,6 +1601,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   freelancerProfile<T extends Prisma.User$freelancerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$freelancerProfileArgs<ExtArgs>>): Prisma.Prisma__FreelancerProfileClient<runtime.Types.Result.GetResult<Prisma.$FreelancerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   jobs<T extends Prisma.User$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   applications<T extends Prisma.User$applicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  freelancerPayments<T extends Prisma.User$freelancerPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$freelancerPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1854,6 +2122,54 @@ export type User$applicationsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ApplicationScalarFieldEnum | Prisma.ApplicationScalarFieldEnum[]
+}
+
+/**
+ * User.payments
+ */
+export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * User.freelancerPayments
+ */
+export type User$freelancerPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

@@ -36,6 +36,10 @@ const config = {
   open_router: {
     api_key: process.env.OPENROUTER_API_KEY,
   },
+
+  stripe: {
+    secret_key: process.env.STRIPE_SECRET_KEY,
+  },
 };
 
 export default config;

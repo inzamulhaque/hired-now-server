@@ -262,6 +262,7 @@ export type ApplicationWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
   freelancer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
 }
 
 export type ApplicationOrderByWithRelationInput = {
@@ -277,6 +278,7 @@ export type ApplicationOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   job?: Prisma.JobOrderByWithRelationInput
   freelancer?: Prisma.UserOrderByWithRelationInput
+  payment?: Prisma.PaymentOrderByWithRelationInput
 }
 
 export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -296,6 +298,7 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
   freelancer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  payment?: Prisma.XOR<Prisma.PaymentNullableScalarRelationFilter, Prisma.PaymentWhereInput> | null
 }, "id" | "jobId_freelancerId">
 
 export type ApplicationOrderByWithAggregationInput = {
@@ -343,6 +346,7 @@ export type ApplicationCreateInput = {
   updatedAt?: Date | string
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
   freelancer: Prisma.UserCreateNestedOneWithoutApplicationsInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateInput = {
@@ -356,6 +360,7 @@ export type ApplicationUncheckedCreateInput = {
   aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUpdateInput = {
@@ -369,6 +374,7 @@ export type ApplicationUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
   freelancer?: Prisma.UserUpdateOneRequiredWithoutApplicationsNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateInput = {
@@ -382,6 +388,7 @@ export type ApplicationUncheckedUpdateInput = {
   aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateManyInput = {
@@ -485,6 +492,11 @@ export type ApplicationSumOrderByAggregateInput = {
   aiMatchScore?: Prisma.SortOrder
 }
 
+export type ApplicationScalarRelationFilter = {
+  is?: Prisma.ApplicationWhereInput
+  isNot?: Prisma.ApplicationWhereInput
+}
+
 export type ApplicationCreateNestedManyWithoutFreelancerInput = {
   create?: Prisma.XOR<Prisma.ApplicationCreateWithoutFreelancerInput, Prisma.ApplicationUncheckedCreateWithoutFreelancerInput> | Prisma.ApplicationCreateWithoutFreelancerInput[] | Prisma.ApplicationUncheckedCreateWithoutFreelancerInput[]
   connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutFreelancerInput | Prisma.ApplicationCreateOrConnectWithoutFreelancerInput[]
@@ -573,6 +585,20 @@ export type EnumApplicationStatusFieldUpdateOperationsInput = {
   set?: $Enums.ApplicationStatus
 }
 
+export type ApplicationCreateNestedOneWithoutPaymentInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutPaymentInput, Prisma.ApplicationUncheckedCreateWithoutPaymentInput>
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutPaymentInput
+  connect?: Prisma.ApplicationWhereUniqueInput
+}
+
+export type ApplicationUpdateOneRequiredWithoutPaymentNestedInput = {
+  create?: Prisma.XOR<Prisma.ApplicationCreateWithoutPaymentInput, Prisma.ApplicationUncheckedCreateWithoutPaymentInput>
+  connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutPaymentInput
+  upsert?: Prisma.ApplicationUpsertWithoutPaymentInput
+  connect?: Prisma.ApplicationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ApplicationUpdateToOneWithWhereWithoutPaymentInput, Prisma.ApplicationUpdateWithoutPaymentInput>, Prisma.ApplicationUncheckedUpdateWithoutPaymentInput>
+}
+
 export type ApplicationCreateWithoutFreelancerInput = {
   id?: string
   coverNote: string
@@ -583,6 +609,7 @@ export type ApplicationCreateWithoutFreelancerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutFreelancerInput = {
@@ -595,6 +622,7 @@ export type ApplicationUncheckedCreateWithoutFreelancerInput = {
   aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutFreelancerInput = {
@@ -649,6 +677,7 @@ export type ApplicationCreateWithoutJobInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   freelancer: Prisma.UserCreateNestedOneWithoutApplicationsInput
+  payment?: Prisma.PaymentCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutJobInput = {
@@ -661,6 +690,7 @@ export type ApplicationUncheckedCreateWithoutJobInput = {
   aiNote?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.PaymentUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationCreateOrConnectWithoutJobInput = {
@@ -689,6 +719,74 @@ export type ApplicationUpdateManyWithWhereWithoutJobInput = {
   data: Prisma.XOR<Prisma.ApplicationUpdateManyMutationInput, Prisma.ApplicationUncheckedUpdateManyWithoutJobInput>
 }
 
+export type ApplicationCreateWithoutPaymentInput = {
+  id?: string
+  coverNote: string
+  status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
+  aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  job: Prisma.JobCreateNestedOneWithoutApplicationsInput
+  freelancer: Prisma.UserCreateNestedOneWithoutApplicationsInput
+}
+
+export type ApplicationUncheckedCreateWithoutPaymentInput = {
+  id?: string
+  jobId: string
+  freelancerId: string
+  coverNote: string
+  status?: $Enums.ApplicationStatus
+  proposedBudget: runtime.Decimal | runtime.DecimalJsLike | number | string
+  aiMatchScore?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ApplicationCreateOrConnectWithoutPaymentInput = {
+  where: Prisma.ApplicationWhereUniqueInput
+  create: Prisma.XOR<Prisma.ApplicationCreateWithoutPaymentInput, Prisma.ApplicationUncheckedCreateWithoutPaymentInput>
+}
+
+export type ApplicationUpsertWithoutPaymentInput = {
+  update: Prisma.XOR<Prisma.ApplicationUpdateWithoutPaymentInput, Prisma.ApplicationUncheckedUpdateWithoutPaymentInput>
+  create: Prisma.XOR<Prisma.ApplicationCreateWithoutPaymentInput, Prisma.ApplicationUncheckedCreateWithoutPaymentInput>
+  where?: Prisma.ApplicationWhereInput
+}
+
+export type ApplicationUpdateToOneWithWhereWithoutPaymentInput = {
+  where?: Prisma.ApplicationWhereInput
+  data: Prisma.XOR<Prisma.ApplicationUpdateWithoutPaymentInput, Prisma.ApplicationUncheckedUpdateWithoutPaymentInput>
+}
+
+export type ApplicationUpdateWithoutPaymentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
+  freelancer?: Prisma.UserUpdateOneRequiredWithoutApplicationsNestedInput
+}
+
+export type ApplicationUncheckedUpdateWithoutPaymentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  jobId?: Prisma.StringFieldUpdateOperationsInput | string
+  freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
+  coverNote?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  proposedBudget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  aiMatchScore?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ApplicationCreateManyFreelancerInput = {
   id?: string
   jobId: string
@@ -711,6 +809,7 @@ export type ApplicationUpdateWithoutFreelancerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutFreelancerInput = {
@@ -723,6 +822,7 @@ export type ApplicationUncheckedUpdateWithoutFreelancerInput = {
   aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateManyWithoutFreelancerInput = {
@@ -759,6 +859,7 @@ export type ApplicationUpdateWithoutJobInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   freelancer?: Prisma.UserUpdateOneRequiredWithoutApplicationsNestedInput
+  payment?: Prisma.PaymentUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutJobInput = {
@@ -771,6 +872,7 @@ export type ApplicationUncheckedUpdateWithoutJobInput = {
   aiNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.PaymentUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateManyWithoutJobInput = {
@@ -800,6 +902,7 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  payment?: boolean | Prisma.Application$paymentArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
 export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -849,6 +952,7 @@ export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  payment?: boolean | Prisma.Application$paymentArgs<ExtArgs>
 }
 export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -864,6 +968,7 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     job: Prisma.$JobPayload<ExtArgs>
     freelancer: Prisma.$UserPayload<ExtArgs>
+    payment: Prisma.$PaymentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1272,6 +1377,7 @@ export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   job<T extends Prisma.JobDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobDefaultArgs<ExtArgs>>): Prisma.Prisma__JobClient<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   freelancer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  payment<T extends Prisma.Application$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$paymentArgs<ExtArgs>>): Prisma.Prisma__PaymentClient<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1709,6 +1815,25 @@ export type ApplicationDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many Applications to delete.
    */
   limit?: number
+}
+
+/**
+ * Application.payment
+ */
+export type Application$paymentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
 }
 
 /**

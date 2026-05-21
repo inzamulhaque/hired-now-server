@@ -23,12 +23,14 @@ model User {
 
   previousPassword String?
 
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
-  otp               Otp[]
-  freelancerProfile FreelancerProfile?
-  jobs              Job[]              @relation("EmployerJobs")
-  applications      Application[]      @relation("FreelancerApplications")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  otp                Otp[]
+  freelancerProfile  FreelancerProfile?
+  jobs               Job[]              @relation("EmployerJobs")
+  applications       Application[]      @relation("FreelancerApplications")
+  payments           Payment[]          @relation("EmployerPayments")
+  freelancerPayments Payment[]          @relation("FreelancerPayments")
 
   @@index([role])
   @@map("users")
@@ -103,14 +105,36 @@ model Application {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  job        Job  @relation(fields: [jobId], references: [id])
-  freelancer User @relation("FreelancerApplications", fields: [freelancerId], references: [id])
+  job        Job      @relation(fields: [jobId], references: [id])
+  freelancer User     @relation("FreelancerApplications", fields: [freelancerId], references: [id])
+  payment    Payment?
 
   @@unique([jobId, freelancerId])
   @@index([jobId])
   @@index([freelancerId])
   @@index([status])
   @@map("applications")
+}
+
+model Payment {
+  id                    String        @id @default(uuid())
+  applicationId         String        @unique @map("application_id")
+  employerId            String
+  freelancerId          String
+  amount                Decimal       @db.Decimal(10, 2)
+  currency              String        @default("usd")
+  stripePaymentIntentId String?       @unique
+  status                PaymentStatus @default(PENDING)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  application Application @relation(fields: [applicationId], references: [id])
+  employer    User        @relation("EmployerPayments", fields: [employerId], references: [id])
+  freelancer  User        @relation("FreelancerPayments", fields: [freelancerId], references: [id])
+
+  @@index([employerId])
+  @@index([status])
+  @@map("payments")
 }
 
 enum Role {
@@ -152,4 +176,11 @@ enum ApplicationStatus {
   SHORTLISTED
   REJECTED
   HIRED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
 }

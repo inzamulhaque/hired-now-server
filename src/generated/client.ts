@@ -66,3 +66,8 @@ export type Job = Prisma.JobModel
  * 
  */
 export type Application = Prisma.ApplicationModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
