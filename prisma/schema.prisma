@@ -117,20 +117,22 @@ model Application {
 }
 
 model Payment {
-  id                    String        @id @default(uuid())
-  applicationId         String        @unique @map("application_id")
+  id            String @id @default(uuid())
+  applicationId String @unique
+
   employerId            String
   freelancerId          String
   amount                Decimal       @db.Decimal(10, 2)
   currency              String        @default("usd")
-  stripePaymentIntentId String?       @unique
+  stripePaymentIntentId String        @unique
   status                PaymentStatus @default(PENDING)
   createdAt             DateTime      @default(now())
   updatedAt             DateTime      @updatedAt
 
   application Application @relation(fields: [applicationId], references: [id])
-  employer    User        @relation("EmployerPayments", fields: [employerId], references: [id])
-  freelancer  User        @relation("FreelancerPayments", fields: [freelancerId], references: [id])
+
+  employer   User @relation("EmployerPayments", fields: [employerId], references: [id])
+  freelancer User @relation("FreelancerPayments", fields: [freelancerId], references: [id])
 
   @@index([employerId])
   @@index([status])

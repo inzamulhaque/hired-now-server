@@ -3,6 +3,7 @@ import type { IJob, IJobApplication } from "./jobs.interface.js";
 import {
   ApplicationStatus,
   JobStatus,
+  PaymentStatus,
   Role,
 } from "../../../generated/enums.js";
 import prisma from "../../../lib/prisma.js";
