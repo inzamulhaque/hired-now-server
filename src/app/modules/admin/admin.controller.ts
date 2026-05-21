@@ -3,6 +3,7 @@ import sendResponse from "../../utils/sendResponse.js";
 import {
   bannedUserIntoDB,
   getAllUserFromDB,
+  getSummaryStatsFromDB,
   reactivateSuspendedUserIntoDB,
   suspendUserIntoDB,
 } from "./admin.service.js";
@@ -64,6 +65,19 @@ export const bannedUser = catchAsync(async (req, res) => {
     statusCode: 200,
     success: true,
     message: "User banned successfully!",
+    data: result,
+  });
+});
+
+export const getSummaryStats = catchAsync(async (req, res) => {
+  const user = req.user!;
+
+  const result = await getSummaryStatsFromDB(user);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Summary stats retrieve successfully!",
     data: result,
   });
 });

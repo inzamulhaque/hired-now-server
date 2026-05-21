@@ -4,6 +4,7 @@ import { Role } from "../../../generated/enums.js";
 import {
   bannedUser,
   getAllUser,
+  getSummaryStats,
   reactivateSuspendedUser,
   suspendUser,
 } from "./admin.controller.js";
@@ -28,6 +29,12 @@ router.patch(
   "/ban-user/:userId",
   auth(Role.ADMIN, Role.SUPER_ADMIN),
   bannedUser,
+);
+
+router.get(
+  "/summary-stats",
+  auth(Role.ADMIN, Role.SUPER_ADMIN),
+  getSummaryStats,
 );
 
 const AdminRouters = router;

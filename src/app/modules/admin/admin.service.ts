@@ -1,5 +1,10 @@
 import type { JwtPayload } from "jsonwebtoken";
-import { AccountStatus, Role } from "../../../generated/enums.js";
+import {
+  AccountStatus,
+  ApplicationStatus,
+  JobStatus,
+  Role,
+} from "../../../generated/enums.js";
 import AppError from "../../utils/AppError.js";
 import prisma from "../../../lib/prisma.js";
 import type { ISearchParams } from "../../utils/buildSearchQuery.js";
@@ -19,8 +24,6 @@ export const getAllUserFromDB = async (
   if (loggedUser.role !== Role.ADMIN && loggedUser.role !== Role.SUPER_ADMIN) {
     throw new AppError("Unauthorized!", 401);
   }
-
-  console.log(where, skip, take, orderBy, page);
 
   const users = await prisma.user.findMany({
     where: {
@@ -211,4 +214,48 @@ export const bannedUserIntoDB = async (
   });
 
   return updatedUser;
+};
+
+export const getSummaryStatsFromDB = async (loggedUser: JwtPayload) => {
+  if (loggedUser.role !== Role.ADMIN && loggedUser.role !== Role.SUPER_ADMIN) {
+    throw new AppError("Unauthorized!", 401);
+  }
+
+  const totalEmployers = await prisma.user.count({
+    where: {
+      role: Role.EMPLOYER,
+    },
+  });
+
+  const totalFreelancers = await prisma.user.count({
+    where: {
+      role: Role.FREELANCER,
+    },
+  });
+
+  const totalActiveProjects = await prisma.job.count({
+    where: {
+      status: JobStatus.OPEN,
+    },
+  });
+
+  const totalClosedProjects = await prisma.job.count({
+    where: {
+      status: JobStatus.CLOSED,
+    },
+  });
+
+  const totalHires = await prisma.application.count({
+    where: {
+      status: ApplicationStatus.HIRED,
+    },
+  });
+
+  return {
+    totalEmployers,
+    totalFreelancers,
+    totalActiveProjects,
+    totalClosedProjects,
+    totalHires,
+  };
 };
