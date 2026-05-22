@@ -76,3 +76,19 @@ export const createPaymentIntentIntoDB = async (
 
   return { ...paymentData, clientSecret: paymentIntent.client_secret };
 };
+
+export const confirmPaymentIntoDB = async (
+  loggedUser: JwtPayload,
+  paymentIntentId: string,
+) => {
+  const paymentdetails = await prisma.payment.findFirst({
+    where: {
+      employerId: loggedUser.userId,
+      stripePaymentIntentId: paymentIntentId,
+    },
+  });
+
+  if (!paymentdetails) {
+    throw new AppError("Payment record not found!", 404);
+  }
+};
