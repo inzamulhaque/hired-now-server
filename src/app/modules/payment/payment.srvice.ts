@@ -1,7 +1,11 @@
 import type { JwtPayload } from "jsonwebtoken";
 import prisma from "../../../lib/prisma.js";
 import AppError from "../../utils/AppError.js";
-import { ApplicationStatus, Role } from "../../../generated/enums.js";
+import {
+  ApplicationStatus,
+  PaymentStatus,
+  Role,
+} from "../../../generated/enums.js";
 import config from "../../../config/index.js";
 import { Stripe } from "stripe";
 
@@ -81,14 +85,30 @@ export const confirmPaymentIntoDB = async (
   loggedUser: JwtPayload,
   paymentIntentId: string,
 ) => {
-  const paymentdetails = await prisma.payment.findFirst({
+  const paymentDetails = await prisma.payment.findFirst({
     where: {
       employerId: loggedUser.userId,
       stripePaymentIntentId: paymentIntentId,
     },
   });
 
-  if (!paymentdetails) {
+  if (!paymentDetails) {
     throw new AppError("Payment record not found!", 404);
   }
+
+  if (paymentDetails.status !== PaymentStatus.PENDING) {
+    throw new AppError("This payment has already been processed!", 400);
+  }
+
+  const updateStatus = await prisma.payment.update({
+    where: {
+      stripePaymentIntentId: paymentIntentId,
+    },
+
+    data: {
+      status: PaymentStatus.COMPLETED,
+    },
+  });
+
+  return updateStatus;
 };
