@@ -31,6 +31,7 @@ model User {
   applications       Application[]      @relation("FreelancerApplications")
   payments           Payment[]          @relation("EmployerPayments")
   freelancerPayments Payment[]          @relation("FreelancerPayments")
+  notifications      Notification[]
 
   @@index([role])
   @@map("users")
@@ -139,6 +140,22 @@ model Payment {
   @@map("payments")
 }
 
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  type      NotificationType
+  title     String
+  body      String
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@map("notifications")
+}
+
 enum Role {
   EMPLOYER
   FREELANCER
@@ -185,4 +202,13 @@ enum PaymentStatus {
   COMPLETED
   FAILED
   REFUNDED
+}
+
+enum NotificationType {
+  NEW_APPLICATION
+  NEW_MESSAGE
+  STATUS_CHANGE
+  HIRED
+  PAYMENT_RECEIVED
+  SYSTEM
 }

@@ -76,3 +76,15 @@ export const PaymentStatus = {
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const NotificationType = {
+  NEW_APPLICATION: 'NEW_APPLICATION',
+  NEW_MESSAGE: 'NEW_MESSAGE',
+  STATUS_CHANGE: 'STATUS_CHANGE',
+  HIRED: 'HIRED',
+  PAYMENT_RECEIVED: 'PAYMENT_RECEIVED',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

@@ -71,3 +71,8 @@ export type Application = Prisma.ApplicationModel
  * 
  */
 export type Payment = Prisma.PaymentModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

@@ -220,6 +220,7 @@ export type UserWhereInput = {
   applications?: Prisma.ApplicationListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   freelancerPayments?: Prisma.PaymentListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -238,6 +239,7 @@ export type UserOrderByWithRelationInput = {
   applications?: Prisma.ApplicationOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
   freelancerPayments?: Prisma.PaymentOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -259,6 +261,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   applications?: Prisma.ApplicationListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   freelancerPayments?: Prisma.PaymentListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -307,6 +310,7 @@ export type UserCreateInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -325,6 +329,7 @@ export type UserUncheckedCreateInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -343,6 +348,7 @@ export type UserUpdateInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -361,6 +367,7 @@ export type UserUncheckedUpdateInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -544,6 +551,20 @@ export type UserUpdateOneRequiredWithoutFreelancerPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFreelancerPaymentsInput, Prisma.UserUpdateWithoutFreelancerPaymentsInput>, Prisma.UserUncheckedUpdateWithoutFreelancerPaymentsInput>
 }
 
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type UserCreateWithoutOtpInput = {
   id?: string
   email: string
@@ -559,6 +580,7 @@ export type UserCreateWithoutOtpInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOtpInput = {
@@ -576,6 +598,7 @@ export type UserUncheckedCreateWithoutOtpInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOtpInput = {
@@ -609,6 +632,7 @@ export type UserUpdateWithoutOtpInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpInput = {
@@ -626,6 +650,7 @@ export type UserUncheckedUpdateWithoutOtpInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFreelancerProfileInput = {
@@ -643,6 +668,7 @@ export type UserCreateWithoutFreelancerProfileInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFreelancerProfileInput = {
@@ -660,6 +686,7 @@ export type UserUncheckedCreateWithoutFreelancerProfileInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFreelancerProfileInput = {
@@ -693,6 +720,7 @@ export type UserUpdateWithoutFreelancerProfileInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFreelancerProfileInput = {
@@ -710,6 +738,7 @@ export type UserUncheckedUpdateWithoutFreelancerProfileInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutJobsInput = {
@@ -727,6 +756,7 @@ export type UserCreateWithoutJobsInput = {
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutJobsInput = {
@@ -744,6 +774,7 @@ export type UserUncheckedCreateWithoutJobsInput = {
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutJobsInput = {
@@ -777,6 +808,7 @@ export type UserUpdateWithoutJobsInput = {
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutJobsInput = {
@@ -794,6 +826,7 @@ export type UserUncheckedUpdateWithoutJobsInput = {
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutApplicationsInput = {
@@ -811,6 +844,7 @@ export type UserCreateWithoutApplicationsInput = {
   jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
   payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutApplicationsInput = {
@@ -828,6 +862,7 @@ export type UserUncheckedCreateWithoutApplicationsInput = {
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
   freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutApplicationsInput = {
@@ -861,6 +896,7 @@ export type UserUpdateWithoutApplicationsInput = {
   jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutApplicationsInput = {
@@ -878,6 +914,7 @@ export type UserUncheckedUpdateWithoutApplicationsInput = {
   jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
   freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPaymentsInput = {
@@ -895,6 +932,7 @@ export type UserCreateWithoutPaymentsInput = {
   jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
   freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -912,6 +950,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
   freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -934,6 +973,7 @@ export type UserCreateWithoutFreelancerPaymentsInput = {
   jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFreelancerPaymentsInput = {
@@ -951,6 +991,7 @@ export type UserUncheckedCreateWithoutFreelancerPaymentsInput = {
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
   applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFreelancerPaymentsInput = {
@@ -984,6 +1025,7 @@ export type UserUpdateWithoutPaymentsInput = {
   jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
   freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -1001,6 +1043,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
   freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutFreelancerPaymentsInput = {
@@ -1029,6 +1072,7 @@ export type UserUpdateWithoutFreelancerPaymentsInput = {
   jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFreelancerPaymentsInput = {
@@ -1046,6 +1090,95 @@ export type UserUncheckedUpdateWithoutFreelancerPaymentsInput = {
   jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
   applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role: $Enums.Role
+  status?: $Enums.AccountStatus
+  previousPassword?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otp?: Prisma.OtpCreateNestedManyWithoutUserInput
+  freelancerProfile?: Prisma.FreelancerProfileCreateNestedOneWithoutUserInput
+  jobs?: Prisma.JobCreateNestedManyWithoutEmployerInput
+  applications?: Prisma.ApplicationCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentCreateNestedManyWithoutFreelancerInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  name: string
+  password: string
+  role: $Enums.Role
+  status?: $Enums.AccountStatus
+  previousPassword?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  otp?: Prisma.OtpUncheckedCreateNestedManyWithoutUserInput
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedCreateNestedOneWithoutUserInput
+  jobs?: Prisma.JobUncheckedCreateNestedManyWithoutEmployerInput
+  applications?: Prisma.ApplicationUncheckedCreateNestedManyWithoutFreelancerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutEmployerInput
+  freelancerPayments?: Prisma.PaymentUncheckedCreateNestedManyWithoutFreelancerInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otp?: Prisma.OtpUpdateManyWithoutUserNestedInput
+  freelancerProfile?: Prisma.FreelancerProfileUpdateOneWithoutUserNestedInput
+  jobs?: Prisma.JobUpdateManyWithoutEmployerNestedInput
+  applications?: Prisma.ApplicationUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUpdateManyWithoutFreelancerNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  previousPassword?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  otp?: Prisma.OtpUncheckedUpdateManyWithoutUserNestedInput
+  freelancerProfile?: Prisma.FreelancerProfileUncheckedUpdateOneWithoutUserNestedInput
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutEmployerNestedInput
+  applications?: Prisma.ApplicationUncheckedUpdateManyWithoutFreelancerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutEmployerNestedInput
+  freelancerPayments?: Prisma.PaymentUncheckedUpdateManyWithoutFreelancerNestedInput
 }
 
 
@@ -1059,6 +1192,7 @@ export type UserCountOutputType = {
   applications: number
   payments: number
   freelancerPayments: number
+  notifications: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1067,6 +1201,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   applications?: boolean | UserCountOutputTypeCountApplicationsArgs
   payments?: boolean | UserCountOutputTypeCountPaymentsArgs
   freelancerPayments?: boolean | UserCountOutputTypeCountFreelancerPaymentsArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
 }
 
 /**
@@ -1114,6 +1249,13 @@ export type UserCountOutputTypeCountFreelancerPaymentsArgs<ExtArgs extends runti
   where?: Prisma.PaymentWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1131,6 +1273,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   applications?: boolean | Prisma.User$applicationsArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   freelancerPayments?: boolean | Prisma.User$freelancerPaymentsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1178,6 +1321,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   applications?: boolean | Prisma.User$applicationsArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   freelancerPayments?: boolean | Prisma.User$freelancerPaymentsArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1192,6 +1336,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     applications: Prisma.$ApplicationPayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
     freelancerPayments: Prisma.$PaymentPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1603,6 +1748,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   applications<T extends Prisma.User$applicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   freelancerPayments<T extends Prisma.User$freelancerPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$freelancerPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2170,6 +2316,30 @@ export type User$freelancerPaymentsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**
