@@ -306,8 +306,19 @@ export const updateApplicationStatusIntoDB = async (
       },
     });
 
+    let notification = null;
+
     // status change to HIRED then automatically reject others applications and job status also change to FILLED
     if (status === ApplicationStatus.HIRED) {
+      notification = await tc.notification.create({
+        data: {
+          userId: application.freelancerId,
+          type: NotificationType.HIRED,
+          title: "Application Accepted",
+          body: `Congratulations! Your application for the job "${job.title}" has been accepted.`,
+        },
+      });
+
       await tc.application.updateMany({
         where: {
           jobId: application.jobId,
@@ -327,8 +338,25 @@ export const updateApplicationStatusIntoDB = async (
         },
       });
     }
-    return updated;
+    return { ...updated, notification };
   });
+
+  // realtime notification
+  if (updatedApplication.notification) {
+    const io = getIO();
+
+    io.to(application.freelancerId).emit("application:hired", {
+      message: "You have been hired!",
+
+      data: {
+        id: updatedApplication.notification.id,
+        type: updatedApplication.notification.type,
+        title: updatedApplication.notification.title,
+        body: updatedApplication.notification.body,
+        isRead: false,
+      },
+    });
+  }
 
   return updatedApplication;
 };
