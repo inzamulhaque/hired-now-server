@@ -52,3 +52,13 @@ export type Payment = Prisma.PaymentModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model Conversation
+ * 
+ */
+export type Conversation = Prisma.ConversationModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
