@@ -3,6 +3,7 @@ import type { IJob, IJobApplication } from "./jobs.interface.js";
 import {
   ApplicationStatus,
   JobStatus,
+  NotificationType,
   PaymentStatus,
   Role,
 } from "../../../generated/enums.js";
@@ -160,16 +161,29 @@ export const createJobApplicationIntoDB = async (
   const aiMatchScore = await aiMatchScoreService(aiInput);
 
   // create application
-  const application = await prisma.application.create({
-    data: {
-      jobId: job.id,
-      freelancerId: user.id,
-      coverNote: applicationData.coverNote,
-      proposedBudget: new Decimal(applicationData.proposedBudget.toFixed(2)),
-      status: ApplicationStatus.PENDING,
-      aiMatchScore: Number(aiMatchScore?.aiMatchScore.toFixed(2)),
-      aiNote: aiMatchScore?.aiNote,
-    },
+  const application = await prisma.$transaction(async (tc) => {
+    const result = await tc.application.create({
+      data: {
+        jobId: job.id,
+        freelancerId: user.id,
+        coverNote: applicationData.coverNote,
+        proposedBudget: new Decimal(applicationData.proposedBudget.toFixed(2)),
+        status: ApplicationStatus.PENDING,
+        aiMatchScore: Number(aiMatchScore?.aiMatchScore.toFixed(2)),
+        aiNote: aiMatchScore?.aiNote,
+      },
+    });
+
+    const notification = await tc.notification.create({
+      data: {
+        userId: job.employerId,
+        type: NotificationType.NEW_APPLICATION,
+        title: "New Application Received",
+        body: `You have received a new application for your job "${job.title}".`,
+      },
+    });
+
+    return { ...result, notification };
   });
 
   // realtime notification
@@ -179,11 +193,11 @@ export const createJobApplicationIntoDB = async (
     message: "A new freelancer applied to your job!",
 
     data: {
-      jobId: job.id,
-      jobTitle: job.title,
-      freelancerId: user.id,
-      freelancerName: user.name,
-      applicationId: application.id,
+      id: application.notification.id,
+      type: application.notification.type,
+      title: application.notification.title,
+      body: application.notification.body,
+      isRead: false,
     },
   });
 
