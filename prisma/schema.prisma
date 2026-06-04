@@ -34,7 +34,6 @@ model User {
   notifications           Notification[]
   employerConversations   Conversation[]     @relation("EmployerConversations")
   freelancerConversations Conversation[]     @relation("FreelancerConversations")
-  conversations           Conversation[]
   messages                Message[]
 
   @@index([role])
@@ -170,8 +169,6 @@ model Conversation {
   employer   User      @relation("EmployerConversations", fields: [employerId], references: [id])
   freelancer User      @relation("FreelancerConversations", fields: [freelancerId], references: [id])
   messages   Message[]
-  user       User?     @relation(fields: [userId], references: [id])
-  userId     String?
 
   @@unique([employerId, freelancerId])
   @@index([employerId])

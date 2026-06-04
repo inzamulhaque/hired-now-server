@@ -187,8 +187,7 @@ export const ConversationScalarFieldEnum = {
   id: 'id',
   employerId: 'employerId',
   freelancerId: 'freelancerId',
-  createdAt: 'createdAt',
-  userId: 'userId'
+  createdAt: 'createdAt'
 } as const
 
 export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]

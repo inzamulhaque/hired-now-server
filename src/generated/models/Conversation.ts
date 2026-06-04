@@ -29,7 +29,6 @@ export type ConversationMinAggregateOutputType = {
   employerId: string | null
   freelancerId: string | null
   createdAt: Date | null
-  userId: string | null
 }
 
 export type ConversationMaxAggregateOutputType = {
@@ -37,7 +36,6 @@ export type ConversationMaxAggregateOutputType = {
   employerId: string | null
   freelancerId: string | null
   createdAt: Date | null
-  userId: string | null
 }
 
 export type ConversationCountAggregateOutputType = {
@@ -45,7 +43,6 @@ export type ConversationCountAggregateOutputType = {
   employerId: number
   freelancerId: number
   createdAt: number
-  userId: number
   _all: number
 }
 
@@ -55,7 +52,6 @@ export type ConversationMinAggregateInputType = {
   employerId?: true
   freelancerId?: true
   createdAt?: true
-  userId?: true
 }
 
 export type ConversationMaxAggregateInputType = {
@@ -63,7 +59,6 @@ export type ConversationMaxAggregateInputType = {
   employerId?: true
   freelancerId?: true
   createdAt?: true
-  userId?: true
 }
 
 export type ConversationCountAggregateInputType = {
@@ -71,7 +66,6 @@ export type ConversationCountAggregateInputType = {
   employerId?: true
   freelancerId?: true
   createdAt?: true
-  userId?: true
   _all?: true
 }
 
@@ -152,7 +146,6 @@ export type ConversationGroupByOutputType = {
   employerId: string
   freelancerId: string
   createdAt: Date
-  userId: string | null
   _count: ConversationCountAggregateOutputType | null
   _min: ConversationMinAggregateOutputType | null
   _max: ConversationMaxAggregateOutputType | null
@@ -181,11 +174,9 @@ export type ConversationWhereInput = {
   employerId?: Prisma.StringFilter<"Conversation"> | string
   freelancerId?: Prisma.StringFilter<"Conversation"> | string
   createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
-  userId?: Prisma.StringNullableFilter<"Conversation"> | string | null
   employer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   freelancer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   messages?: Prisma.MessageListRelationFilter
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type ConversationOrderByWithRelationInput = {
@@ -193,11 +184,9 @@ export type ConversationOrderByWithRelationInput = {
   employerId?: Prisma.SortOrder
   freelancerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   employer?: Prisma.UserOrderByWithRelationInput
   freelancer?: Prisma.UserOrderByWithRelationInput
   messages?: Prisma.MessageOrderByRelationAggregateInput
-  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ConversationWhereUniqueInput = Prisma.AtLeast<{
@@ -209,11 +198,9 @@ export type ConversationWhereUniqueInput = Prisma.AtLeast<{
   employerId?: Prisma.StringFilter<"Conversation"> | string
   freelancerId?: Prisma.StringFilter<"Conversation"> | string
   createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
-  userId?: Prisma.StringNullableFilter<"Conversation"> | string | null
   employer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   freelancer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   messages?: Prisma.MessageListRelationFilter
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "employerId_freelancerId">
 
 export type ConversationOrderByWithAggregationInput = {
@@ -221,7 +208,6 @@ export type ConversationOrderByWithAggregationInput = {
   employerId?: Prisma.SortOrder
   freelancerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ConversationCountOrderByAggregateInput
   _max?: Prisma.ConversationMaxOrderByAggregateInput
   _min?: Prisma.ConversationMinOrderByAggregateInput
@@ -235,7 +221,6 @@ export type ConversationScalarWhereWithAggregatesInput = {
   employerId?: Prisma.StringWithAggregatesFilter<"Conversation"> | string
   freelancerId?: Prisma.StringWithAggregatesFilter<"Conversation"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Conversation"> | Date | string
-  userId?: Prisma.StringNullableWithAggregatesFilter<"Conversation"> | string | null
 }
 
 export type ConversationCreateInput = {
@@ -244,7 +229,6 @@ export type ConversationCreateInput = {
   employer: Prisma.UserCreateNestedOneWithoutEmployerConversationsInput
   freelancer: Prisma.UserCreateNestedOneWithoutFreelancerConversationsInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
-  user?: Prisma.UserCreateNestedOneWithoutConversationsInput
 }
 
 export type ConversationUncheckedCreateInput = {
@@ -252,7 +236,6 @@ export type ConversationUncheckedCreateInput = {
   employerId: string
   freelancerId: string
   createdAt?: Date | string
-  userId?: string | null
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
 }
 
@@ -262,7 +245,6 @@ export type ConversationUpdateInput = {
   employer?: Prisma.UserUpdateOneRequiredWithoutEmployerConversationsNestedInput
   freelancer?: Prisma.UserUpdateOneRequiredWithoutFreelancerConversationsNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
-  user?: Prisma.UserUpdateOneWithoutConversationsNestedInput
 }
 
 export type ConversationUncheckedUpdateInput = {
@@ -270,7 +252,6 @@ export type ConversationUncheckedUpdateInput = {
   employerId?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
 }
 
@@ -279,7 +260,6 @@ export type ConversationCreateManyInput = {
   employerId: string
   freelancerId: string
   createdAt?: Date | string
-  userId?: string | null
 }
 
 export type ConversationUpdateManyMutationInput = {
@@ -292,7 +272,6 @@ export type ConversationUncheckedUpdateManyInput = {
   employerId?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ConversationListRelationFilter = {
@@ -315,7 +294,6 @@ export type ConversationCountOrderByAggregateInput = {
   employerId?: Prisma.SortOrder
   freelancerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type ConversationMaxOrderByAggregateInput = {
@@ -323,7 +301,6 @@ export type ConversationMaxOrderByAggregateInput = {
   employerId?: Prisma.SortOrder
   freelancerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type ConversationMinOrderByAggregateInput = {
@@ -331,7 +308,6 @@ export type ConversationMinOrderByAggregateInput = {
   employerId?: Prisma.SortOrder
   freelancerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type ConversationScalarRelationFilter = {
@@ -353,13 +329,6 @@ export type ConversationCreateNestedManyWithoutFreelancerInput = {
   connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
 }
 
-export type ConversationCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutUserInput, Prisma.ConversationUncheckedCreateWithoutUserInput> | Prisma.ConversationCreateWithoutUserInput[] | Prisma.ConversationUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutUserInput | Prisma.ConversationCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ConversationCreateManyUserInputEnvelope
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-}
-
 export type ConversationUncheckedCreateNestedManyWithoutEmployerInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutEmployerInput, Prisma.ConversationUncheckedCreateWithoutEmployerInput> | Prisma.ConversationCreateWithoutEmployerInput[] | Prisma.ConversationUncheckedCreateWithoutEmployerInput[]
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutEmployerInput | Prisma.ConversationCreateOrConnectWithoutEmployerInput[]
@@ -371,13 +340,6 @@ export type ConversationUncheckedCreateNestedManyWithoutFreelancerInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutFreelancerInput, Prisma.ConversationUncheckedCreateWithoutFreelancerInput> | Prisma.ConversationCreateWithoutFreelancerInput[] | Prisma.ConversationUncheckedCreateWithoutFreelancerInput[]
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutFreelancerInput | Prisma.ConversationCreateOrConnectWithoutFreelancerInput[]
   createMany?: Prisma.ConversationCreateManyFreelancerInputEnvelope
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-}
-
-export type ConversationUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutUserInput, Prisma.ConversationUncheckedCreateWithoutUserInput> | Prisma.ConversationCreateWithoutUserInput[] | Prisma.ConversationUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutUserInput | Prisma.ConversationCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ConversationCreateManyUserInputEnvelope
   connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
 }
 
@@ -409,20 +371,6 @@ export type ConversationUpdateManyWithoutFreelancerNestedInput = {
   deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
 }
 
-export type ConversationUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutUserInput, Prisma.ConversationUncheckedCreateWithoutUserInput> | Prisma.ConversationCreateWithoutUserInput[] | Prisma.ConversationUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutUserInput | Prisma.ConversationCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutUserInput | Prisma.ConversationUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ConversationCreateManyUserInputEnvelope
-  set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutUserInput | Prisma.ConversationUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutUserInput | Prisma.ConversationUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
-}
-
 export type ConversationUncheckedUpdateManyWithoutEmployerNestedInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutEmployerInput, Prisma.ConversationUncheckedCreateWithoutEmployerInput> | Prisma.ConversationCreateWithoutEmployerInput[] | Prisma.ConversationUncheckedCreateWithoutEmployerInput[]
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutEmployerInput | Prisma.ConversationCreateOrConnectWithoutEmployerInput[]
@@ -451,20 +399,6 @@ export type ConversationUncheckedUpdateManyWithoutFreelancerNestedInput = {
   deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
 }
 
-export type ConversationUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ConversationCreateWithoutUserInput, Prisma.ConversationUncheckedCreateWithoutUserInput> | Prisma.ConversationCreateWithoutUserInput[] | Prisma.ConversationUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutUserInput | Prisma.ConversationCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ConversationUpsertWithWhereUniqueWithoutUserInput | Prisma.ConversationUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ConversationCreateManyUserInputEnvelope
-  set?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  disconnect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  delete?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  connect?: Prisma.ConversationWhereUniqueInput | Prisma.ConversationWhereUniqueInput[]
-  update?: Prisma.ConversationUpdateWithWhereUniqueWithoutUserInput | Prisma.ConversationUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ConversationUpdateManyWithWhereWithoutUserInput | Prisma.ConversationUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ConversationScalarWhereInput | Prisma.ConversationScalarWhereInput[]
-}
-
 export type ConversationCreateNestedOneWithoutMessagesInput = {
   create?: Prisma.XOR<Prisma.ConversationCreateWithoutMessagesInput, Prisma.ConversationUncheckedCreateWithoutMessagesInput>
   connectOrCreate?: Prisma.ConversationCreateOrConnectWithoutMessagesInput
@@ -484,14 +418,12 @@ export type ConversationCreateWithoutEmployerInput = {
   createdAt?: Date | string
   freelancer: Prisma.UserCreateNestedOneWithoutFreelancerConversationsInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
-  user?: Prisma.UserCreateNestedOneWithoutConversationsInput
 }
 
 export type ConversationUncheckedCreateWithoutEmployerInput = {
   id?: string
   freelancerId: string
   createdAt?: Date | string
-  userId?: string | null
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
 }
 
@@ -510,14 +442,12 @@ export type ConversationCreateWithoutFreelancerInput = {
   createdAt?: Date | string
   employer: Prisma.UserCreateNestedOneWithoutEmployerConversationsInput
   messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
-  user?: Prisma.UserCreateNestedOneWithoutConversationsInput
 }
 
 export type ConversationUncheckedCreateWithoutFreelancerInput = {
   id?: string
   employerId: string
   createdAt?: Date | string
-  userId?: string | null
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
 }
 
@@ -528,32 +458,6 @@ export type ConversationCreateOrConnectWithoutFreelancerInput = {
 
 export type ConversationCreateManyFreelancerInputEnvelope = {
   data: Prisma.ConversationCreateManyFreelancerInput | Prisma.ConversationCreateManyFreelancerInput[]
-  skipDuplicates?: boolean
-}
-
-export type ConversationCreateWithoutUserInput = {
-  id?: string
-  createdAt?: Date | string
-  employer: Prisma.UserCreateNestedOneWithoutEmployerConversationsInput
-  freelancer: Prisma.UserCreateNestedOneWithoutFreelancerConversationsInput
-  messages?: Prisma.MessageCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationUncheckedCreateWithoutUserInput = {
-  id?: string
-  employerId: string
-  freelancerId: string
-  createdAt?: Date | string
-  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutConversationInput
-}
-
-export type ConversationCreateOrConnectWithoutUserInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  create: Prisma.XOR<Prisma.ConversationCreateWithoutUserInput, Prisma.ConversationUncheckedCreateWithoutUserInput>
-}
-
-export type ConversationCreateManyUserInputEnvelope = {
-  data: Prisma.ConversationCreateManyUserInput | Prisma.ConversationCreateManyUserInput[]
   skipDuplicates?: boolean
 }
 
@@ -581,7 +485,6 @@ export type ConversationScalarWhereInput = {
   employerId?: Prisma.StringFilter<"Conversation"> | string
   freelancerId?: Prisma.StringFilter<"Conversation"> | string
   createdAt?: Prisma.DateTimeFilter<"Conversation"> | Date | string
-  userId?: Prisma.StringNullableFilter<"Conversation"> | string | null
 }
 
 export type ConversationUpsertWithWhereUniqueWithoutFreelancerInput = {
@@ -600,28 +503,11 @@ export type ConversationUpdateManyWithWhereWithoutFreelancerInput = {
   data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutFreelancerInput>
 }
 
-export type ConversationUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  update: Prisma.XOR<Prisma.ConversationUpdateWithoutUserInput, Prisma.ConversationUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.ConversationCreateWithoutUserInput, Prisma.ConversationUncheckedCreateWithoutUserInput>
-}
-
-export type ConversationUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.ConversationWhereUniqueInput
-  data: Prisma.XOR<Prisma.ConversationUpdateWithoutUserInput, Prisma.ConversationUncheckedUpdateWithoutUserInput>
-}
-
-export type ConversationUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.ConversationScalarWhereInput
-  data: Prisma.XOR<Prisma.ConversationUpdateManyMutationInput, Prisma.ConversationUncheckedUpdateManyWithoutUserInput>
-}
-
 export type ConversationCreateWithoutMessagesInput = {
   id?: string
   createdAt?: Date | string
   employer: Prisma.UserCreateNestedOneWithoutEmployerConversationsInput
   freelancer: Prisma.UserCreateNestedOneWithoutFreelancerConversationsInput
-  user?: Prisma.UserCreateNestedOneWithoutConversationsInput
 }
 
 export type ConversationUncheckedCreateWithoutMessagesInput = {
@@ -629,7 +515,6 @@ export type ConversationUncheckedCreateWithoutMessagesInput = {
   employerId: string
   freelancerId: string
   createdAt?: Date | string
-  userId?: string | null
 }
 
 export type ConversationCreateOrConnectWithoutMessagesInput = {
@@ -653,7 +538,6 @@ export type ConversationUpdateWithoutMessagesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employer?: Prisma.UserUpdateOneRequiredWithoutEmployerConversationsNestedInput
   freelancer?: Prisma.UserUpdateOneRequiredWithoutFreelancerConversationsNestedInput
-  user?: Prisma.UserUpdateOneWithoutConversationsNestedInput
 }
 
 export type ConversationUncheckedUpdateWithoutMessagesInput = {
@@ -661,27 +545,17 @@ export type ConversationUncheckedUpdateWithoutMessagesInput = {
   employerId?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ConversationCreateManyEmployerInput = {
   id?: string
   freelancerId: string
   createdAt?: Date | string
-  userId?: string | null
 }
 
 export type ConversationCreateManyFreelancerInput = {
   id?: string
   employerId: string
-  createdAt?: Date | string
-  userId?: string | null
-}
-
-export type ConversationCreateManyUserInput = {
-  id?: string
-  employerId: string
-  freelancerId: string
   createdAt?: Date | string
 }
 
@@ -690,14 +564,12 @@ export type ConversationUpdateWithoutEmployerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   freelancer?: Prisma.UserUpdateOneRequiredWithoutFreelancerConversationsNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
-  user?: Prisma.UserUpdateOneWithoutConversationsNestedInput
 }
 
 export type ConversationUncheckedUpdateWithoutEmployerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
 }
 
@@ -705,7 +577,6 @@ export type ConversationUncheckedUpdateManyWithoutEmployerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ConversationUpdateWithoutFreelancerInput = {
@@ -713,44 +584,18 @@ export type ConversationUpdateWithoutFreelancerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employer?: Prisma.UserUpdateOneRequiredWithoutEmployerConversationsNestedInput
   messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
-  user?: Prisma.UserUpdateOneWithoutConversationsNestedInput
 }
 
 export type ConversationUncheckedUpdateWithoutFreelancerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
 }
 
 export type ConversationUncheckedUpdateManyWithoutFreelancerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   employerId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type ConversationUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  employer?: Prisma.UserUpdateOneRequiredWithoutEmployerConversationsNestedInput
-  freelancer?: Prisma.UserUpdateOneRequiredWithoutFreelancerConversationsNestedInput
-  messages?: Prisma.MessageUpdateManyWithoutConversationNestedInput
-}
-
-export type ConversationUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  employerId?: Prisma.StringFieldUpdateOperationsInput | string
-  freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  messages?: Prisma.MessageUncheckedUpdateManyWithoutConversationNestedInput
-}
-
-export type ConversationUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  employerId?: Prisma.StringFieldUpdateOperationsInput | string
-  freelancerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -790,11 +635,9 @@ export type ConversationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   employerId?: boolean
   freelancerId?: boolean
   createdAt?: boolean
-  userId?: boolean
   employer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   messages?: boolean | Prisma.Conversation$messagesArgs<ExtArgs>
-  user?: boolean | Prisma.Conversation$userArgs<ExtArgs>
   _count?: boolean | Prisma.ConversationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["conversation"]>
 
@@ -803,10 +646,8 @@ export type ConversationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   employerId?: boolean
   freelancerId?: boolean
   createdAt?: boolean
-  userId?: boolean
   employer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.Conversation$userArgs<ExtArgs>
 }, ExtArgs["result"]["conversation"]>
 
 export type ConversationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -814,10 +655,8 @@ export type ConversationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   employerId?: boolean
   freelancerId?: boolean
   createdAt?: boolean
-  userId?: boolean
   employer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.Conversation$userArgs<ExtArgs>
 }, ExtArgs["result"]["conversation"]>
 
 export type ConversationSelectScalar = {
@@ -825,26 +664,22 @@ export type ConversationSelectScalar = {
   employerId?: boolean
   freelancerId?: boolean
   createdAt?: boolean
-  userId?: boolean
 }
 
-export type ConversationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employerId" | "freelancerId" | "createdAt" | "userId", ExtArgs["result"]["conversation"]>
+export type ConversationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employerId" | "freelancerId" | "createdAt", ExtArgs["result"]["conversation"]>
 export type ConversationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   employer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   messages?: boolean | Prisma.Conversation$messagesArgs<ExtArgs>
-  user?: boolean | Prisma.Conversation$userArgs<ExtArgs>
   _count?: boolean | Prisma.ConversationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ConversationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   employer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.Conversation$userArgs<ExtArgs>
 }
 export type ConversationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   employer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   freelancer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.Conversation$userArgs<ExtArgs>
 }
 
 export type $ConversationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -853,14 +688,12 @@ export type $ConversationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     employer: Prisma.$UserPayload<ExtArgs>
     freelancer: Prisma.$UserPayload<ExtArgs>
     messages: Prisma.$MessagePayload<ExtArgs>[]
-    user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     employerId: string
     freelancerId: string
     createdAt: Date
-    userId: string | null
   }, ExtArgs["result"]["conversation"]>
   composites: {}
 }
@@ -1258,7 +1091,6 @@ export interface Prisma__ConversationClient<T, Null = never, ExtArgs extends run
   employer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   freelancer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   messages<T extends Prisma.Conversation$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  user<T extends Prisma.Conversation$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Conversation$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1292,7 +1124,6 @@ export interface ConversationFieldRefs {
   readonly employerId: Prisma.FieldRef<"Conversation", 'String'>
   readonly freelancerId: Prisma.FieldRef<"Conversation", 'String'>
   readonly createdAt: Prisma.FieldRef<"Conversation", 'DateTime'>
-  readonly userId: Prisma.FieldRef<"Conversation", 'String'>
 }
     
 
@@ -1715,25 +1546,6 @@ export type Conversation$messagesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
-}
-
-/**
- * Conversation.user
- */
-export type Conversation$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
 }
 
 /**
