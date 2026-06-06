@@ -61,6 +61,22 @@ const messageHandler = (io: Server, socket: Socket) => {
       timestamp: messageData.createdAt,
     });
   });
+
+  // Handle message read
+  socket.on("markAsRead", async (payload: { conversationId: string }) => {
+    const { userId } = socket.data.user;
+
+    await prisma.message.updateMany({
+      where: {
+        conversationId: payload.conversationId,
+        senderId: { not: userId },
+        isRead: false,
+      },
+      data: {
+        isRead: true,
+      },
+    });
+  });
 };
 
 export default messageHandler;
