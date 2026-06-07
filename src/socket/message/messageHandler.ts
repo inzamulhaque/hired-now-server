@@ -77,6 +77,29 @@ const messageHandler = (io: Server, socket: Socket) => {
       },
     });
   });
+
+  // Handle get all messages in a conversation
+  socket.on("getMessages", async (payload: { conversationId: string }) => {
+    const { userId } = socket.data.user;
+    await prisma.conversation.findFirstOrThrow({
+      where: {
+        id: payload.conversationId,
+        OR: [{ employerId: userId }, { freelancerId: userId }],
+      },
+    });
+
+    const messages = await prisma.message.findMany({
+      where: {
+        conversationId: payload.conversationId,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    io.to(socket.id).emit("allMessages", messages);
+    socket.emit("messages", messages);
+  });
 };
 
 export default messageHandler;
