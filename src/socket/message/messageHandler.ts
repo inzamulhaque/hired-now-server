@@ -22,39 +22,48 @@ const messageHandler = (io: Server, socket: Socket) => {
       });
     }
 
-    let conversation = await prisma.conversation.findFirst({
-      where: {
-        employerId: userRole === Role.EMPLOYER ? userId : message.receiverId,
-        freelancerId:
-          userRole === Role.FREELANCER ? userId : message.receiverId,
-      },
-    });
-
-    const messageData = await prisma.$transaction(async (tx) => {
-      if (!conversation) {
-        conversation = await tx.conversation.create({
-          data: {
+    const { conversation, messageData } = await prisma.$transaction(
+      async (tx) => {
+        const conversation = await tx.conversation.upsert({
+          where: {
+            employerId_freelancerId: {
+              employerId:
+                userRole === Role.EMPLOYER
+                  ? userId
+                  : (message.receiverId as string),
+              freelancerId:
+                userRole === Role.FREELANCER
+                  ? userId
+                  : (message.receiverId as string),
+            },
+          },
+          update: {},
+          create: {
             employerId:
-              userRole === Role.EMPLOYER ? userId : message.receiverId,
+              userRole === Role.EMPLOYER
+                ? userId
+                : (message.receiverId as string),
             freelancerId:
-              userRole === Role.FREELANCER ? userId : message.receiverId,
+              userRole === Role.FREELANCER
+                ? userId
+                : (message.receiverId as string),
           },
         });
-      }
 
-      const newMessage = await tx.message.create({
-        data: {
-          conversationId: conversation.id,
-          senderId: userId,
-          content: message.content,
-        },
-      });
+        const newMessage = await tx.message.create({
+          data: {
+            conversationId: conversation.id,
+            senderId: userId,
+            content: message.content,
+          },
+        });
 
-      return newMessage;
-    });
+        return { conversation, messageData: newMessage };
+      },
+    );
 
     io.to(message.receiverId).emit("newMessage", {
-      conversationId: conversation?.id,
+      conversationId: conversation.id,
       senderId: userId,
       content: messageData.content,
       isRead: messageData.isRead,
