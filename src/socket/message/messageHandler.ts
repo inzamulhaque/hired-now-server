@@ -69,13 +69,15 @@ const messageHandler = (io: Server, socket: Socket) => {
       isRead: messageData.isRead,
       timestamp: messageData.createdAt,
     });
+
+    socket.join(conversation.id);
   });
 
   // Handle message read
   socket.on("markAsRead", async (payload: { conversationId: string }) => {
     const { userId } = socket.data.user;
 
-    await prisma.message.updateMany({
+    const updatedMessage = await prisma.message.updateManyAndReturn({
       where: {
         conversationId: payload.conversationId,
         senderId: { not: userId },
@@ -84,7 +86,27 @@ const messageHandler = (io: Server, socket: Socket) => {
       data: {
         isRead: true,
       },
+      select: {
+        id: true,
+        conversationId: true,
+        content: true,
+        isRead: true,
+      },
     });
+
+    console.log(updatedMessage.length);
+
+    if (updatedMessage.length > 0) {
+      io.to(payload.conversationId).emit("messagesRead", {
+        conversationId: payload.conversationId,
+        messageIds: updatedMessage.map((msg) => msg.id),
+      });
+
+      socket.emit("messagesRead", {
+        conversationId: payload.conversationId,
+        messageIds: updatedMessage.map((msg) => msg.id),
+      });
+    }
   });
 
   // Handle get all messages in a conversation
@@ -106,7 +128,6 @@ const messageHandler = (io: Server, socket: Socket) => {
       },
     });
 
-    io.to(socket.id).emit("allMessages", messages);
     socket.emit("messages", messages);
   });
 };
