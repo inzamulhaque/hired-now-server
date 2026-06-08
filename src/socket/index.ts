@@ -3,6 +3,7 @@ import AppError from "../app/utils/AppError.js";
 import messageHandler from "./message/messageHandler.js";
 import socketAuth from "./middleware/socketAuth.js";
 import { Role } from "../generated/enums.js";
+import notificationHandler from "./notification/notificationHandler.js";
 
 let io: Server;
 
@@ -25,6 +26,7 @@ export const initSocketServer = (server: any) => {
 
     socket.join(userId);
     messageHandler(io, socket);
+    notificationHandler(socket);
 
     console.log(socket.rooms);
 

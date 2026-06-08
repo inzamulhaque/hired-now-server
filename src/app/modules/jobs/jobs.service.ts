@@ -176,7 +176,7 @@ export const createJobApplicationIntoDB = async (
 
     const notification = await tc.notification.create({
       data: {
-        userId: job.employerId,
+        receiverId: job.employerId,
         type: NotificationType.NEW_APPLICATION,
         title: "New Application Received",
         body: `You have received a new application for your job "${job.title}".`,
@@ -312,7 +312,7 @@ export const updateApplicationStatusIntoDB = async (
     if (status === ApplicationStatus.HIRED) {
       notification = await tc.notification.create({
         data: {
-          userId: application.freelancerId,
+          receiverId: application.freelancerId,
           type: NotificationType.HIRED,
           title: "Application Accepted",
           body: `Congratulations! Your application for the job "${job.title}" has been accepted.`,
