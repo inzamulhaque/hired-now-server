@@ -22,6 +22,32 @@ const messageHandler = (io: Server, socket: Socket) => {
       });
     }
 
+    if (userId === payload.receiverId) {
+      return socket.emit("error", {
+        message: "You cannot send a message to yourself",
+      });
+    }
+
+    const sender = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    const receiver = await prisma.user.findUnique({
+      where: { id: message.receiverId },
+    });
+
+    if (!sender || !receiver) {
+      return socket.emit("error", {
+        message: "Sender or receiver not found",
+      });
+    }
+
+    if (sender.role === receiver.role) {
+      return socket.emit("error", {
+        message: "Sender and receiver must have different roles",
+      });
+    }
+
     const { conversation, messageData } = await prisma.$transaction(
       async (tx) => {
         const conversation = await tx.conversation.upsert({
@@ -62,15 +88,17 @@ const messageHandler = (io: Server, socket: Socket) => {
       },
     );
 
-    io.to(message.receiverId).emit("newMessage", {
+    const payloadToSend = {
       conversationId: conversation.id,
       senderId: userId,
       content: messageData.content,
       isRead: messageData.isRead,
       timestamp: messageData.createdAt,
-    });
+    };
 
-    socket.join(conversation.id);
+    socket.emit("newMessage", payloadToSend);
+
+    io.to(message.receiverId).emit("newMessage", payloadToSend);
   });
 
   // Handle message read
@@ -89,20 +117,19 @@ const messageHandler = (io: Server, socket: Socket) => {
       select: {
         id: true,
         conversationId: true,
+        senderId: true,
         content: true,
         isRead: true,
       },
     });
 
-    console.log(updatedMessage.length);
-
     if (updatedMessage.length > 0) {
-      io.to(payload.conversationId).emit("messagesRead", {
+      io.to(userId).emit("messagesRead", {
         conversationId: payload.conversationId,
         messageIds: updatedMessage.map((msg) => msg.id),
       });
 
-      socket.emit("messagesRead", {
+      io.to(updatedMessage[0].senderId).emit("messagesRead", {
         conversationId: payload.conversationId,
         messageIds: updatedMessage.map((msg) => msg.id),
       });
@@ -112,6 +139,7 @@ const messageHandler = (io: Server, socket: Socket) => {
   // Handle get all messages in a conversation
   socket.on("getMessages", async (payload: { conversationId: string }) => {
     const { userId } = socket.data.user;
+
     await prisma.conversation.findFirstOrThrow({
       where: {
         id: payload.conversationId,
