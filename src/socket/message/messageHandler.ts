@@ -158,6 +158,22 @@ const messageHandler = (io: Server, socket: Socket) => {
 
     socket.emit("messages", messages);
   });
+
+  socket.on(
+    "conversationDetails",
+    async (payload: { conversationId: string }) => {
+      const { userId } = socket.data.user;
+
+      const conversation = await prisma.conversation.findFirstOrThrow({
+        where: {
+          id: payload.conversationId,
+          OR: [{ employerId: userId }, { freelancerId: userId }],
+        },
+      });
+
+      socket.emit("conversationDetails", conversation);
+    },
+  );
 };
 
 export default messageHandler;
