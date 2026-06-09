@@ -174,6 +174,20 @@ const messageHandler = (io: Server, socket: Socket) => {
       socket.emit("conversationDetails", conversation);
     },
   );
+
+  socket.on("conversationList", async () => {
+    const { userId } = socket.data.user;
+    const conversations = await prisma.conversation.findMany({
+      where: {
+        OR: [{ employerId: userId }, { freelancerId: userId }],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    socket.emit("conversationList", conversations);
+  });
 };
 
 export default messageHandler;
